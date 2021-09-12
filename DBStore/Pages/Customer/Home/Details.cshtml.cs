@@ -218,8 +218,14 @@ namespace DBStore.Pages.Customer.Home
             {
                 var claimsIdentity = (ClaimsIdentity)this.User.Identity;
                 var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                if (claim == null)
+                {
+                    return Redirect("/Identity/Account/Login");
 
-               
+
+                }
+
+
                 ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(c => c.Id == claim.Value);
                 var Comment = _unitOfWork.Reviews.GetFirstOrDefault(c => c.ProductId == ReviewsObj.ProductId);
                 var reviews = ReviewsObj.Reviews;
@@ -257,6 +263,12 @@ namespace DBStore.Pages.Customer.Home
             {
                 var claimsIdentity = (ClaimsIdentity)this.User.Identity;
                 var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                if (claim == null)
+                {
+                    return Redirect("/Identity/Account/Login");
+
+
+                }
 
 
                 ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(c => c.Id == claim.Value);
