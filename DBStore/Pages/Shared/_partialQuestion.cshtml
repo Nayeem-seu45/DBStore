@@ -1,0 +1,35 @@
+﻿
+@model DBStore.Pages.Customer.Home.DetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+<div class="col-md-5" style="padding-right: 15px; padding-left: 15px;">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>;
+
+    <form class="review-form" method="post" asp-page-handler="Question">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="QuestionObj.ProductId" />
+        <h4 class="text-uppercase">Have question about this product? Get specific details about this product.</h4>
+      
+
+        <div class="form-group">
+
+            <textarea class="form-control" asp-for="QuestionObj.Reviews"> </textarea>
+        </div>
+
+
+
+        <div class="col-md-12">
+          
+            <button type="submit" class="primary-btn" id="submitButton" name="submit" value="Submit">
+                ASK QUESTIONS
+            </button>
+        </div>
+    </form>
+
+
+</div>
+
+

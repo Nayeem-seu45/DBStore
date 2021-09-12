@@ -1,0 +1,64 @@
+﻿@model IEnumerable<DBStore.Models.Product>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="section">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">Showing @ViewData["ResultCount"] results for @ViewData["QueryString"]</h2>
+                </div>
+            </div>
+            @if (Model.Count() == 0)
+            {<div id="collections_block">
+                    <div class="col-md-12 text-center">
+
+
+                        <h2>Nothing found!</h2>
+                    </div>
+                </div>
+            }
+            else
+            {
+                @foreach (var item in Model)
+
+                {
+                    <div id="collections_block">
+                        <div class="col-md-2 col-sm-5 col-xs-5">
+
+
+                            <div id="owl-demo1" class="product product-single">
+                                <a href="/Customer/home/Details?id=@item.Id">
+                                    <div class="product-thumb N-1">
+                                        <img src="@Url.Content(item.Image)" alt="">
+                                    </div>
+                                    <div class="product-body">
+                                        <h3 class="product-price">@item.DisPrice <del class="product-old-price">@item.Price</del></h3>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o empty"></i>
+                                        </div>
+                                        <h2 class="product-name"><a href="#">@item.Name</a></h2>
+
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+
+        </div>
+    </div>
+
+</div>

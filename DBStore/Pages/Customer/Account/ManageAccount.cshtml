@@ -1,0 +1,259 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model DBStore.Pages.Customer.Account.ManageAccountModel
+@{
+    ViewData["Title"] = "ManageAccount";
+    Layout = "~/Pages/Shared/_LayoutDashboard.cshtml";
+    var user = UserManager.GetUserAsync(User).Result;
+}
+
+<style>
+    .dashboard ul li a {
+        font-size: 15px;
+        color: #fff;
+        font-weight: 500;
+        text-transform: capitalize;
+        background: #031d2c;
+        border-radius: 3px;
+    }
+
+        .dashboard ul li a.active {
+            background: #ff6600;
+        }
+
+    .dashboard ul li {
+        margin-bottom: 5px;
+    }
+
+        .dashboard ul li a:hover {
+            background: #ff6600;
+            color: #fff;
+        }
+
+        .dashboard ul li button:hover {
+            background: #ff6600;
+            color: #fff;
+        }
+
+    .dash__table-wrap a {
+        font-weight: bolder;
+    }
+</style>
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+    <div class="deshibipony-content">
+
+
+        <div class="u-s-p-y-60">
+
+
+            <div class="section__content">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <div class="breadcrumb__wrap">
+                            <ul class="breadcrumb__list">
+                                <li class="has-separator">
+
+                                    <a href="index.html">Home</a>
+                                </li>
+                                <li class="is-marked">
+
+                                    <a href="dash-cancellation.html">My Account</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="section_content">
+            
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-12 col-md-12">
+
+                            <div class="dashboard dash__box--shadow u-s-m-b-30">
+                                <div class="dash__pad-1">
+
+                                    <span class="dash__text u-s-m-b-16">Hello, @UserManager.GetUserName(User).Split('@').FirstOrDefault()</span>
+                                    <ul class="nav flex-column">
+                                        <li>
+
+                                            <a href="/Customer/Account/Dashboard">Dashboard</a>
+                                        </li>
+                                        <li>
+
+                                            <a class="active" style="font-family: 'Poppins', sans-serif;font-weight: 700;" href="/account/manageAccount">Account Details</a>
+
+
+                                        </li>
+
+
+                                        <li>
+
+                                            <a href="/Customer/Account/Order">My Orders</a>
+                                        </li>
+
+                                        <li>
+
+                                            <a href="dash-track-order.html">Track Order</a>
+                                        </li>
+                                        <li>
+
+                                            <form style=" background: #031d2c;" id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                                <button style="text-decoration: none;border-radius: 3px; color: #fff; font-size: 15px; font-weight: 500; " id="logout" type="submit" class="nav-link btn btn-small btn-link">Logout</button>
+                                            </form>
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            @*<div class="dash__box dash__box--bg-white dash__box--shadow dash__box--w">
+                                <div class="dash__pad-1">
+                                    <ul class="dash__w-list">
+                                        <li>
+                                            <div class="dash__w-wrap">
+
+                                                <span class="dash__w-icon dash__w-icon-style-1"><i class="fa fa-shopping-cart"></i></span>
+
+                                                <span class="dash__w-text">4</span>
+
+                                                <span class="dash__w-name">Orders Placed</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="dash__w-wrap">
+
+                                                <span class="dash__w-icon dash__w-icon-style-2"><i class="fa fa-times"></i></span>
+
+                                                <span class="dash__w-text">0</span>
+
+                                                <span class="dash__w-name">Cancel Orders</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="dash__w-wrap">
+
+                                                <span class="dash__w-icon dash__w-icon-style-3"><i class="fa fa-heart"></i></span>
+
+                                                <span class="dash__w-text">0</span>
+
+                                                <span class="dash__w-name">Wishlist</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+                            </div>*@
+
+                        </div>
+
+                        <div class="col-lg-9 col-md-12">
+                            <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                                <div class="dash__pad-2">
+                                    <h1 class="dash__h1 u-s-m-b-14">Manage My Account</h1>
+
+                                    <span class="dash__text u-s-m-b-30">From your My Account Dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.</span>
+                                    <div class="row">
+                                        <div class="col-lg-4 u-s-m-b-30">
+                                            <div class="dash__box dash__box--bg-grey dash__box--shadow-2 u-h-100">
+                                                <div class="dash__pad-3">
+                                                    <h2 class="dash__h2 u-s-m-b-8">PERSONAL PROFILE</h2>
+                                                    <div class="dash__link dash__link--secondary u-s-m-b-8">
+
+                                                        <a href="/Identity/Account/manage">Edit</a>
+                                                    </div>
+
+                                                    <span class="dash__text">@UserManager.GetUserName(User).Split('@').FirstOrDefault()</span>
+                                                    <span class="dash__text">@user.Email</span>
+                                                    <span class="dash__text">@user.PhoneNumber</span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="col-lg-4 u-s-m-b-30">
+            <div class="dash__box dash__box--bg-grey dash__box--shadow-2 u-h-100">
+                <div class="dash__pad-3">
+                    <h2 class="dash__h2 u-s-m-b-8">ADDRESS BOOK</h2>
+
+                    <span class="dash__text-2 u-s-m-b-8">Default Shipping Address</span>
+                    <div class="dash__link dash__link--secondary u-s-m-b-8">
+
+                        <a href="/account/edit">Edit</a>
+                    </div>
+
+                    <span class="dash__text">4247 Ashford Drive Virginia - VA-20006 - USA</span>
+
+                    <span class="dash__text">(+0) 900901904</span>
+                </div>
+            </div>
+        </div>*@
+                                        <div class="col-lg-4 u-s-m-b-30">
+                                            <div class="dash__box dash__box--bg-grey dash__box--shadow-2 u-h-100">
+                                                <div class="dash__pad-3">
+                                                    <h2 class="dash__h2 u-s-m-b-8">BILLING ADDRESS</h2>
+
+                                                    <span class="dash__text-2 u-s-m-b-8">Default Billing Address</span>
+
+                                                    <span class="dash__text">Khilkhet,Nikunja-2,Dhaka-Bangladesh</span>
+
+                                                    <span class="dash__text">(+088) 01936209794</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-lg-4 u-s-m-b-30">
+                                            <div class="dash__box dash__box--bg-grey dash__box--shadow-2 u-h-100">
+                                                <div class="dash__pad-3">
+                                                    <h2 class="dash__h2 u-s-m-b-8">IF NEEDED CHANGE YOUR </h2>
+                                                    <h2 class="dash__h2 u-s-m-b-8">DESHIBIPONY ACCOUNT PASSWORD</h2>
+                                                    <span class="dash__text-2 u-s-m-b-8">
+                                                        Click here
+                                                        <a class="nav-link" id="change-password" href="/Identity/Account/manage/ChangePassword">Password</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            
+        </div>
+
+    </div>
+
+}
+
+else
+{
+    <li class="header-account">
+        <div class="text-primary">
+            <div class="header-btns-icon">
+                <h3 style="text-align:center;"><i>Please Login and See Account Dashboard</i></h3>
+                <i class="fa fa-user-o"></i>
+
+            </div>
+            <strong class="text-uppercase"> <a href="/Account/Login" class="text-uppercase">Login/Join</a></strong>
+        </div>
+        <p></p>
+
+    </li>
+}

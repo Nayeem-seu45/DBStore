@@ -1,0 +1,484 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DeshiBipony-Online Shopping Bangladesh</title>
+    <link href="https://fonts.googleapis.com/css?family=Hind:400,700" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/css/slick-theme.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/css/nouislider.min.css" />
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="~/Content/css/style.css" />
+    <script src="~/Admin/vendor/jquery/jquery.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div id="top-header">
+            <div class="container">
+                <div class="pull-left">
+                    <span>Trusted deshibipony Online Shop in Bangladesh | Fast Delivery</span>
+                </div>
+                <div class="pull-right">
+                    <ul class="header-top-links">
+                        <li><a href="/home/FAQ">FAQ</a></li>
+                        <li><a href="#">Report a problem</a></li>
+                        <li><a href="/home/contact">Contact</a></li>
+                        <li><a href="/home/reviews">Reviews</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="header-logo">
+                            <a class="logo" href="/Home/Index">
+                                <img src="~/Deshi-Bipony-qq.png" />
+
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                        <div id="search-category-wrap">
+                            <div class="header-search">
+                                <form>
+                                    <div class="search-cat">
+                                        <select class="category-items" name="category">
+                                            <option>All Categories</option>
+                                            <option>Men</option>
+                                            <option>Women</option>
+                                            <option>Jewellery</option>
+                                            <option>Electronics</option>
+                                            <option>Kid</option>
+                                            <option>Bootees Bags</option>
+                                            <option>Clothing</option>
+                                            <option>Footwear</option>
+                                            <option>T-Shirts</option>
+                                            <option>Polo-Shirts</option>
+                                        </select>
+                                    </div>
+                                    <input class="input-circle search-input" id="text-search" type="text" placeholder="Serch for Product">
+                                    <button id="SerchDB" type="submit" class="search-btn" value="Search"><i class="fa fa-search"></i> Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        @*<div class="pull-right">*@
+                        <ul class="header-btns">
+                            <!-- Account -->
+                            @await Html.PartialAsync("_LoginPartial")
+
+                            <!-- /Account -->
+                            <!-- Cart -->
+                            <li class="header-cart dropdown default-dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <div class="header-btns-icon">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <span class="qty">3</span>
+                                    </div>
+                                    <strong class="text-uppercase">My Cart:</strong>
+                                    <br>
+                                    <span>35.20$</span>
+                                </a>
+                                <div class="custom-menu">
+                                    @await Html.PartialAsync("UserCart")
+
+                                </div>
+                            </li>
+                            <!-- /Cart -->
+                            <!-- Mobile nav toggle-->
+                            <li class="nav-toggle">
+                                <button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
+                            </li>
+                            <!-- / Mobile nav toggle -->
+                        </ul>
+                    </div>
+                </div>
+                <!-- header -->
+            </div>
+            </div>
+        <!-- container -->
+    </header>
+    <!-- /HEADER -->
+    <!-- NAVIGATION -->
+    <div id="navigation">
+        <!-- container -->
+        <div class="container">
+            <div id="responsive-nav">
+                <!-- category nav -->
+                @*<div class="category-nav show-on-click">
+                        <span class="category-header">Categories <i class="fa fa-list"></i></span>
+                        <ul class="category-list">
+                            <li class="dropdown side-dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women’s Clothing <i class="fa fa-angle-right"></i></a>
+                                <div class="custom-menu">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                            <hr class="hidden-md hidden-lg">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                            <hr class="hidden-md hidden-lg">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="row hidden-sm hidden-xs">
+                                        <div class="col-md-12">
+                                            <hr>
+                                            <a class="banner banner-1" href="#">
+                                                <img src="./img/banner05.jpg" alt="">
+                                                <div class="banner-caption text-center">
+                                                    <h2 class="white-color">NEW COLLECTION</h2>
+                                                    <h3 class="white-color font-weak">HOT DEAL</h3>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><a href="#">Men’s Clothing</a></li>
+                            <li class="dropdown side-dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Phones & Accessories <i class="fa fa-angle-right"></i></a>
+                                <div class="custom-menu">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                            <hr>
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                            <hr class="hidden-md hidden-lg">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                            <hr>
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-4 hidden-sm hidden-xs">
+                                            <a class="banner banner-2" href="#">
+                                                <img src="./img/banner04.jpg" alt="">
+                                                <div class="banner-caption">
+                                                    <h3 class="white-color">NEW<br>COLLECTION</h3>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><a href="#">Computer & Office</a></li>
+                            <li><a href="#">Consumer Electronics</a></li>
+                            <li class="dropdown side-dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Jewelry & Watches <i class="fa fa-angle-right"></i></a>
+                                <div class="custom-menu">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                            <hr>
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                            <hr class="hidden-md hidden-lg">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                            <hr>
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                            <hr class="hidden-md hidden-lg">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                            <hr>
+                                            <ul class="list-links">
+                                                <li>
+                                                    <h3 class="list-links-title">Categories</h3>
+                                                </li>
+                                                <li><a href="#">Women’s Clothing</a></li>
+                                                <li><a href="#">Men’s Clothing</a></li>
+                                                <li><a href="#">Phones & Accessories</a></li>
+                                                <li><a href="#">Jewelry & Watches</a></li>
+                                                <li><a href="#">Bags & Shoes</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><a href="#">Bags & Shoes</a></li>
+                            <li><a href="#">View All</a></li>
+                        </ul>
+                    </div>*@
+                <!-- /category nav -->
+                <!-- menu nav -->
+                <div class="menu-nav">
+                    <span class="menu-header">Menu <i class="fa fa-bars"></i></span>
+                    <ul class="menu-list">
+                        <li><a href="/Home/Index">Home</a></li>
+                        <li><a href="/Product/Index">All Product</a></li>
+                        <li><a href="/Offer/Index">Offer</a></li>
+                        <li><a href="/Product/Newest">Newest</a></li>
+                        <li><a href="/Product/BestRated">Most Rated</a></li>
+                        <li><a href="/Home/RequestItem">Not found?</a></li>
+                        <li><a href="#">News feed</a></li>
+                        <li><a href="#">Campaign</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <!-- menu nav -->
+            </div>
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /NAVIGATION -->
+
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <footer id="footer" class="section section-grey">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- footer widget -->
+                <div class="col-md-3 col-sm-6 col-xs-6" id="footerC">
+                    <div class="footer">
+                        <div class="footer-logo">
+                            <div class="logo">
+
+                                <img src="~/Deshi-Bipony-qq.png" />
+
+                            </div>
+
+                        </div>
+
+                        <div style="margin-bottom:5px;"> <i class="fa fa-home"></i><span> Barisal Sadar,Barisal</span></div>
+                        <div> <i class="fa fa-phone"></i><span> 01936209794</span></div>
+                        <div style="margin-bottom:5px;"> <i class="fa fa-envelope"></i><span> deshibipony@gmail.com</span></div>
+
+                        <!-- footer social -->
+                        <div class="footer-social">
+                            <a class="icon" href="facebook.com/deshibipony"><i class="fa fa-facebook"></i></a>
+                            <a class="icon" href="#"><i class="fa fa-twitter"></i></a>
+                            <a class="icon" href="www.instagram.com/deshi_bipony"><i class="fa fa-instagram"></i></a>
+                            <a class="icon" href="gmail.com/d"><i class="fa fa-google-plus"></i></a>
+                            <a class="icon" href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                        <!-- /footer social -->
+                    </div>
+                </div>
+                <!-- /footer widget -->
+                <!-- footer widget -->
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                    <div class="footer" style="color:#fff;">
+                        <h3 class="footer-header">My Account</h3>
+                        <ul class="list-links">
+                            <li><a href="#">My Account</a></li>
+                            <li><a href="#">My Wishlist</a></li>
+                            <li><a href="#">Compare</a></li>
+                            <li><a href="#">Checkout</a></li>
+                            <li><a href="#">Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /footer widget -->
+
+                <div class="clearfix visible-sm visible-xs"></div>
+
+                <!-- footer widget -->
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                    <div class="footer">
+                        <h3 class="footer-header">Customer Service</h3>
+                        <ul class="list-links">
+                            <li><a href="/home/abountus">About Us</a></li>
+                            <li><a href="#">Shiping & Return</a></li>
+                            <li><a href="#">Shiping Guide</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /footer widget -->
+                <!-- footer subscribe -->
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                    <div class="footer">
+                        <h3 class="footer-header">Stay Connected</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                        <form>
+                            <div class="form-group">
+                                <input class="input" placeholder="Enter Email Address">
+                            </div>
+                            <button class="primary-btn">Join Newslatter</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="footer-copyright">
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved |deshibipony.com <i class="fa fa-heart-o" aria-hidden="true"></i>
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        Development & Design by Asif_sikder|Nayeem
+                    </div>
+                    <div class="col-md-3">
+                        <div class="payment_icons">
+                            <ul>
+
+                                <li><img src="~/payment.png" alt=""></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    @*<a href="#" class="totop totop-is-visible totop-fade-out"> </a>*@
+
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/slick.min.js"></script>
+    <script src="~/Content/js/nouislider.min.js"></script>
+    <script src="~/Content/js/jquery.zoom.min.js"></script>
+    <script src="~/Content/js/main.js"></script>
+    @*  <script src="~/Content/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/Content/js/site.js" asp-append-version="true"></script>*@
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

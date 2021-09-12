@@ -1,0 +1,41 @@
+﻿
+<div id="shopping-cart">
+    <div class="shopping-cart-list">
+        <div class="product product-widget">
+            <div id="spngdiv"></div>
+        </div>
+    </div>
+    <div class="shopping-cart-btns">
+        <button class="main-btn">View Cart</button>
+        <button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "GET",
+            url: "/ShoppingCart/GetCartItems",
+            dataType: "json",
+            success: function (data) {
+                debugger;
+
+                $('#spngdiv').empty();
+                if (data.length == 0) {
+                    $('#spngdiv').append('<div class=""><div class="text-center">Your cart is empty</div></div>');
+
+                }
+                $.each(data, function (i, item) {
+                    debugger;
+                    $('#spngdiv').append('<div class=""><p hidden>' + item.id + '</p><h3 class="product-price">BDT-' + item.unitPrice + ' <span class="qty">x' + item.quantity + '</span></h3><h2 class="product-name"><a href="/product/details?id' + item.productId + '">' + item.productName + '</a></h2></div><button id="btnremove" class="cancel-btn"><i class="fa fa-trash"></i></button>');
+
+                });
+            }
+        });
+
+    });
+
+
+
+</script>

@@ -1,0 +1,288 @@
+﻿@page
+@model DBStore.Pages.Admin.Product.UpsertModel
+@{
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+
+}
+
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Please write correct informations about the product.</h6>
+            </div>
+            <form method="post" asp-action="Upsert" enctype="multipart/form-data">
+                <div class="container">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="row px-2 mx-2 backgroundWhite border">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                @if (Model.ProductObj.Product.Id != 0)
+                                {
+                                    <input type="hidden" asp-for="ProductObj.Product.Id" />
+                                    @*<input type="hidden" asp-for="ProductObj.Product.AddDate" />*@
+                                }
+
+                                <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+
+                                    <h2 class="text-primary">@(Model.ProductObj.Product.Id != 0 ? "Update" : "Create") Product</h2>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label text-black">Product Title(Ad title)</label>
+                                        <input class="form-control" asp-for="ProductObj.Product.Name" />
+                                        <span class="text-danger" asp-validation-for="ProductObj.Product.Name"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label text-black">Category</label>
+                                        @Html.DropDownListFor(m => m.ProductObj.Product.CategoryId, Model.ProductObj.CategoryList,
+                                      "- Please select a Category -",
+                                      new { @class = "form-control" })
+                                        <span class="text-danger" asp-validation-for="ProductObj.Product.CategoryId"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label text-black">Brand</label>
+                                        @Html.DropDownListFor(m => m.ProductObj.Product.BrandId, Model.ProductObj.BrandList,
+                                             "- Please select a Brand -",
+                                             new { @class = "form-control" })
+                                        <span class="text-danger" asp-validation-for="ProductObj.Product.BrandId"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label text-black">Is it feature Product?</label>
+                                        <br />
+                                        <input type="checkbox" id="isfeature" asp-for="ProductObj.Product.Feature" /> Select to show this product in feature product list.
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="ProductObj.Product.InStock" class="control-label text-black"> Is It Available in Stock ?</label>
+                                        <br />
+                                        <input type="checkbox" id="isStock" asp-for="ProductObj.Product.InStock" /> Inshure Product In Stock Right Now.
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label text-black">Measurement Unit</label>
+                                        @Html.DropDownListFor(m => m.ProductObj.Product.UnitId, Model.ProductObj.UnitList,
+                                                              "- Please select a Unit -",
+                                                              new { @class = "form-control" })
+                                        <span class="text-danger" asp-validation-for="ProductObj.Product.UnitId"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label text-black">Measurement Unit</label>
+                                        @Html.DropDownListFor(m => m.ProductObj.Product.OfferZoneId, Model.ProductObj.OfferList,
+                                                              "- Please select a Offer -",
+                                                              new { @class = "form-control" })
+                                        <span class="text-danger" asp-validation-for="ProductObj.Product.OfferZoneId"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label text-black">Product Tag</label>
+                                        <input class="form-control" asp-for="ProductObj.Product.Tag" />
+                                        <span class="text-danger" asp-validation-for="ProductObj.Product.Tag"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="ProductObj.Product.Description"></label>
+                                        <textarea class="form-control" asp-for="ProductObj.Product.Description" id="txtDesc" style="height:200px;"> </textarea>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-12">
+                                    <div class="text-center" style="background-color:darkcyan;border-radius:3px">
+                                        <p class="text-large-red">Images</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label text-black">Product Images(Main Image)</label>
+                                        <input asp-for="ProductObj.Product.Image" type="file" name="files" class="form-control dropify" />
+                                        @*<div class="text-danger" id="Imageserror"></div>*@
+                                    </div>
+                                </div>
+
+                              
+                                    <div class="col-md-4">
+                                        <label class="control-label text-black">Product Images(Maximum 3 images)</label>
+                                        <input id="imageinputs" asp-for="ProductObj.Product.Image1" type="file" name="files" class="form-control dropify" />
+                                        @*<div class="text-danger" id="Imageserror"></div>*@
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="file" asp-for="ProductObj.Product.Image2" class="form-control dropify">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="file" asp-for="ProductObj.Product.Image3" class="form-control dropify">
+                                    </div>
+                                
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label asp-for="ProductObj.Product.KeyFeature"></label>
+                                        <textarea class="form-control" asp-for="ProductObj.Product.KeyFeature" id="txtDesc" style="height:200px;"> </textarea>
+                                    </div>
+                                </div>
+                                @*<div class="col-md-6">
+                                    <div>
+                                        <div class="row" id="preview"></div>
+                                    </div>
+                                    <div id="previewRemove" style="padding:4px"> </div>
+                                </div>*@
+
+
+                                <div class="col-12">
+                                    <div class="text-center" style="background-color:seagreen;border-radius:3px">
+                                        <p class="text-large-red">Warranty & pricing</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="ProductObj.Product.WarrantyTypeId"></label>
+                                        @Html.DropDownListFor(m => m.ProductObj.Product.WarrantyTypeId, Model.ProductObj.WarrantyList,
+                                       "- Please select a Warranty -",
+                                       new { @class = "form-control" })
+                                        <span class="text-danger" asp-validation-for="ProductObj.Product.WarrantyTypeId"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label text-black">Selling Price</label>
+                                        <input class="form-control" asp-for="ProductObj.Product.Price" />
+                                        <span class="text-danger" asp-validation-for="ProductObj.Product.Price"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label text-black">Offer Price</label>
+                                        <input class="form-control" asp-for="ProductObj.Product.DisPrice" />
+                                        <span class="text-danger" asp-validation-for="ProductObj.Product.DisPrice"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="text-center" style="background-color:blue;border-radius:3px">
+                                        <p style="color:white">Please make sure that all the informations avobe are correct.</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-9 offset-3">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            @if (Model.ProductObj.Product.Id != 0)
+                                            {
+                                                <button type="submit" class="btn btn-primary form-control"> Update</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="submit" onclick="return ValidateInput()" class="btn btn-primary form-control"> Create</button>
+                                            }
+
+
+                                        </div>
+
+                                        <div class="col-6">
+                                            <a asp-page="./Index" class="btn btn-success form-control">Back to List</a>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                       
+
+                    </div>
+
+                </div>
+
+           </form>
+        </div>
+    </div>
+
+            @section Scripts{
+
+                <script>
+                    tinymce.init({
+                        selector: 'textarea',
+                        plugins: "lists",
+                        menubar: 'file edit format'
+                    });
+
+                    function ValidateInput() {
+                        if (document.getElementById("uploadBox").value == "") {
+                            swal("Error", "Please Select an Image", "error")
+                            return false;
+                        }
+                        return true;
+                    };
+
+
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        $("#imageinputs").change(function (e) {
+                            var files = e.target.files;
+                            var totalfiles = document.getElementById('imageinputs').files.length;
+                            if (totalfiles > 3) {
+                                var templates = '<p style="color:red">Maximum 3 files allowed.</p>';
+                                $("#previewRemove").append(templates);
+                                $("#imageinputs").val("");
+                            }
+                           
+                            else {
+                                $("#Imageserror").empty();
+                                $.each(files, function (i, file) {
+                                    var reader = new FileReader();
+                                    reader.readAsDataURL(file);
+                                    reader.onload = function (e) {
+
+                                        var template = '<div class="col-md-6"><div style="padding:5px"><img  height="200" width="230" src="' + e.target.result + '"/></div></div>';
+                                        $("#preview").append(template);
+                                    };
+                                });
+                                $("#previewRemove").empty();
+                                var templates = '<button onclick="ImageManager.RemoveContentMultiple()" class="btn btn-danger">Remove all photos</button>';
+                                $("#previewRemove").append(templates);
+                            }
+
+                        });
+
+
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function () {
+                        $('.dropify').dropify();
+                        $('.summernote').summernote();
+                        $('#item_catalog').addClass('menu-open');
+                        $('#navCatalog').addClass('active');
+                        $('#navProduct').addClass('active');
+                    });
+                </script>
+
+
+
+            }
+

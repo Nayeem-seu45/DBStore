@@ -1,0 +1,78 @@
+﻿@page
+@model DBStore.Pages.Customer.Home.ReviewsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Reviews";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    
+        PagedList pager = new PagedList();
+        int SN = 1;
+        int pageNo = 0;
+        if (ViewBag.pager != null)
+        {
+            pager = ViewBag.pager;
+            pageNo = pager.PageIndex;
+            SN = ((pager.PageIndex * pager.PageSize) - pager.PageSize) + 1;
+        }
+        string areaname = "";
+
+        string controller = "";
+        string action = "";
+        Pager pagemodel = new Pager() { PagedList = pager, AreaName = areaname, ControllerName = controller, ActionName = action };
+    }
+
+    <div class="breadcrum-main ">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="breadcrum-contain">
+                        <div>
+                            <h2 align="center">reviews</h2>
+                            <ul>
+                                <li><a href="/Customer/Home/Index">home</a></li>
+                                <li><i class="fa fa-angle-double-right"></i></li>
+                                <li><a href="#">review</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="review  section-big-py-space">
+        <div class="container">
+            <div class="row review-block">
+                @foreach (var item in Model.ProductReviews)
+                {
+                    <div class="col-lg-4 col-md-4">
+
+                        <div class="review-box" style="overflow: hidden; width: 100%; height: 240px;">
+
+                            <img class="" src="@Url.Content(item.ProductImage)" style="float:left;" alt="review">
+                            <div style="height: 126px;">
+                                <h5>@item.AddedBy</h5>
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o empty"></i>
+                                </div>
+                                <div class="review-message">
+                                    <p>@Html.Raw(@item.Description)</p>
+                                </div>
+                                <h6 style="padding-top:5px;">(@item.AddDate )</h6>
+
+                            </div>
+                           
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+            @await Html.PartialAsync("_pagingpartialReviews", pagemodel)
+        </div>
+    </section>

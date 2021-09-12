@@ -1,0 +1,96 @@
+﻿
+@model DBStore.Pages.Customer.Home.DetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+<div class="col-md-5" style="padding-right: 15px; padding-left: 15px;">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>;
+
+    <form class="review-form" method="post" asp-page-handler="Reviews" enctype="multipart/form-data" onsubmit='submitComment();'>
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="ReviewsObj.ProductId" />
+        <h4 class="text-uppercase">Write Your Review</h4>
+        <p>Your email address will not be published.</p>
+        <div class="form-group">
+            <label class="control-label text-black">Add Images</label>
+            <input asp-for="ReviewsObj.ProductImage" type="file" name="files" multiple />
+
+        </div>
+
+        <div class="form-group">
+
+            <textarea class="form-control" asp-for="ReviewsObj.Reviews" id="txtDesc" style="height:100px;"> </textarea>
+        </div>
+
+
+        <div class="col-md-7">
+            <div onmouseout="CRateSelected(this)">
+                <span class="starFade" id="Rate1" onclick="CRate(1)" onmouseover="CRateOver(1)" onmouseout="CRateOut(1)"></span><span class="starFade" id="Rate2" onclick="CRate(2)" onmouseover="CRateOver(2)" onmouseout="CRateOut(2)"></span><span class="starFade" id="Rate3" onclick="CRate(3)" onmouseover="CRateOver(3)" onmouseout="CRateOut(3)"></span><span class="starFade" id="Rate4" onclick="CRate(4)" onmouseover="CRateOver(4)" onmouseout="CRateOut(4)"></span><span class="starFade" id="Rate5" onclick="CRate(5)" onmouseover="CRateOver(5)" onmouseout="CRateOut(5)"></span>
+            </div>
+        </div>
+
+
+        <div class="col-md-12">
+            <input type="hidden" name="Rating" id="Rating" value="0" />
+            <button type="submit" class="primary-btn" id="submitButton" name="submit" value="Submit">
+                <i class="fa fa-thumbs-up"></i>
+
+                SUBMIT&nbsp;REVIEW
+            </button>
+        </div>
+    </form>
+
+
+</div>
+
+
+
+@section Scripts{
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>;
+
+    <script>
+        $(function submitComment() {
+            if ($("#Rating").val() == "0") {
+                alert("Please rate this service provider.");
+                return false;
+            }
+            else {
+                return true;
+            }
+        });
+
+        $(function CRate(r) {
+            $("#Rating").val(r);
+            for (var i = 1; i <= r; i++) {
+                $("#Rate" + i).attr('class', 'starGlow');
+            }
+            // unselect remaining
+            for (var i = r + 1; i <= 5; i++) {
+                $("#Rate" + i).attr('class', 'starFade');
+            }
+        });
+
+        $(function CRateOver(r) {
+            for (var i = 1; i <= r; i++) {
+                $("#Rate" + i).attr('class', 'starGlow');
+            }
+        });
+
+        $(function CRateOut(r) {
+            for (var i = 1; i <= r; i++) {
+                $("#Rate" + i).attr('class', 'starFade');
+            }
+        });
+
+        $(function CRateSelected() {
+            var setRating = $("#Rating").val();
+            for (var i = 1; i <= setRating; i++) {
+                $("#Rate" + i).attr('class', 'starGlow');
+            }
+        });
+    </script>
+}
+

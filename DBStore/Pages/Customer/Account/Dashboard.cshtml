@@ -1,0 +1,177 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model DBStore.Pages.Customer.Account.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Pages/Shared/_LayoutDashboard.cshtml";
+    var user = UserManager.GetUserAsync(User).Result;
+}
+<style>
+    .dashboard ul li a {
+        font-size: 15px;
+        color: #fff;
+        font-weight: 500;
+        text-transform: capitalize;
+        background: #031d2c;
+        border-radius: 3px;
+    }
+
+        .dashboard ul li a.active {
+            background: #ff6600;
+        }
+
+        .dashboard ul li{
+            margin-bottom:5px;
+        }
+
+        .dashboard ul li a:hover {
+            background: #ff6600;
+            color: #fff;
+        }
+            .dashboard ul li button:hover {
+                background: #ff6600;
+                color: #fff;
+            }
+    .dash__table-wrap a {
+       
+        font-weight: bolder;
+    }
+</style>
+
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+    <div class="deshibipony-content">
+        <div class="col-lg-12">
+
+
+
+            <div class="u-s-p-y-60">
+
+
+                <div class="section__content">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <div class="breadcrumb__wrap">
+                                <ul class="breadcrumb__list">
+                                    <li class="has-separator">
+                                       
+                                        <a href=" /Customer/Home/Index">Home</a>
+                                    </li>
+                                    <li class="is-marked">
+
+                                        <a href="/customer/account/manageAccount">My Account</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="section_content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-12 col-md-3">
+                               
+                                <div class="dashboard dash__box--shadow u-s-m-b-30">
+
+                                    <div class="dash__pad-1">
+                                        <span class="dash__text u-s-m-b-16">Hello, @UserManager.GetUserName(User).Split('@').FirstOrDefault()</span>
+                                        <ul class="nav flex-column">
+                                            <li>
+
+                                                <a class="nav-link active" style="font-family: 'Poppins', sans-serif;font-weight: 700;" href="/Customer/Account/Dashboard">Dashboard</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="/Customer/Account/manageAccount">Account Details</a>
+                                            </li>
+
+                                            <li>
+
+                                                <a href="/Customer/account/order">My Orders</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="dash-track-order.html">Track Order</a>
+                                            </li>
+
+                                            <li>
+
+                                                <form style=" background: #031d2c;" id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                                    <button style="text-decoration: none;border-radius: 3px; color: #fff; font-size: 15px; font-weight: 500; " id="logout" type="submit" class="nav-link btn btn-small btn-link">Logout</button>
+                                                </form>
+
+                                            </li>
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+
+                                </div>
+
+                            <div class="col-lg-9 col-md-12">
+
+                                <div class="dash__box dash__box--shadow dash__box--bg-white dash__box--radius">
+                                    <h2 class="dash__h2 u-s-p-xy-20">RECENT ORDERS</h2>
+                                    <hr />
+                                    <div class="dash__table-wrap gl-scroll">
+                                        <table class="table table-responsive table-hover">
+                                            <thead>
+                                                <tr style="background-image: -webkit-linear-gradient( 45deg,#ff6600 0,#031d2c 100%); color:#fff;">
+                                                    <th>Order #</th>
+                                                    <th>Items</th>
+                                                    <th>Placed On</th>
+                                                    <th>Total</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.Orders)
+                                                {
+                                                <tr>
+                                                    <td>@item.OrderId</td>
+                                                    <td><img src="@Url.Content(item.ProductImnage)" height="35"/></td>
+                                                    <td>@item.OrderDate.ToShortDateString() - @item.OrderDate.ToShortTimeString()</td>
+                                                    <td>@item.OrderTotal</td>
+                                                    <td><a href="/Customer/Account/OrderDetails?id=@item.Id">Manage</a></td>
+                                                </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+        </div>
+    </div>
+}
+
+else
+{
+    <li class="header-account">
+        <div class="text-primary">
+            <div class="header-btns-icon">
+                <i class="fa fa-user-o"></i>
+
+            </div>
+            <strong class="text-uppercase"> <a href="/Account/Login" class="text-uppercase">Login/Join</a></strong>
+        </div>
+        <p></p>
+
+    </li>
+}

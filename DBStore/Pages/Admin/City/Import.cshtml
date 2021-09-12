@@ -1,0 +1,120 @@
+﻿@page
+@model DBStore.Pages.Admin.City.ImportModel
+@{
+    ViewData["Title"] = "Import";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Import city list from excel file.</h1>
+
+<h4>You can find excel file from google search! <br />Just upload the file with names and number be sure about compatibility.<br /> Check compatibity in documentation. or<a href="/Admin/help/documnetation">click here</a></h4>
+
+<form method="post" asp-action="Import" id="form1" enctype="multipart/form-data">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Please select file</label>
+                    <input type="file" id="file1" name="file" class="form-control" />
+                </div>
+            </div>
+            @*<div class="col-md-12">
+                <div class="form-group">
+                    <label>Which column contains city name?</label>
+                    <input  id="columnumber" name="files" class="form-control" />
+                </div>
+            </div>*@
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="submit" @*name="Upload"*@ typeof="submit" value="Upload" @*id="btnupload"*@ class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="row">
+            <div id="divPrint"></div>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript" language="JavaScript">
+        document.getElementById('file1').onchange = function () {
+            document.getElementById('form1').submit();
+        };
+        //$(function () {
+
+        //    $('#btnupload').on('click', function () {
+
+        //        var fileExtension = ['xls', 'xlsx'];
+
+        //        var filename = $('#fileupload').val();
+
+        //        if (filename.length == 0) {
+
+        //            alert("Please select a file.");
+
+        //            return false;
+
+        //        }
+
+        //        else {
+
+        //            var extension = filename.replace(/^.*\./, '');
+
+        //            if ($.inArray(extension, fileExtension) == -1) {
+
+        //                alert("Please select only excel files.");
+
+        //                return false;
+
+        //            }
+
+        //        }
+
+        //        var fdata = new FormData();
+
+        //        var fileUpload = $("#fileupload").get(0);
+
+        //        var files = fileUpload.files;
+        //        var start = $("#columnumber").val();
+        //        fdata.append(files[0].name, files[0]);
+        //        //formData.append('catInfo', JSON.stringify(Info));
+
+        //        fdata.append('start', start);
+
+        //        $.ajax({
+
+        //            type: "POST",
+        //            url: "Import",
+        //            data: fdata,
+        //            contentType: "application/json; charset=utf-8",
+        //            dataType: "json",
+
+        //            success: function (response) {
+
+        //                if (response.length == 0)
+
+        //                    alert('Some error occured while uploading');
+
+        //                else {
+
+        //                    $('#divPrint').html(response);
+
+        //                }
+
+        //            },
+
+        //            error: function (e) {
+
+        //                $('#divPrint').html(e.responseText);
+
+        //            }
+
+        //        });
+
+        //    })
+        //});
+
+    </script>
+}

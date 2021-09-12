@@ -1,0 +1,187 @@
+﻿
+@page
+@model DBStore.Pages.Customer.Product.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    int totaldata =Convert.ToInt32(ViewData["totaldata"]);
+
+
+
+
+    int SN = 1;
+    PagedList pager = new PagedList();
+    int pageNo = 0;
+    if (ViewData["pager"] != null)
+    {
+        pager = ViewBag.pager;
+        pageNo = pager.PageIndex;
+        SN = ((pager.PageIndex * pager.PageSize) - pager.PageSize) + 1;
+    }
+
+    string pagename = "/Customer/Product";
+    Pager pagemodel = new Pager() { PagedList = pager, PageName = pagename};
+}
+
+<style>
+    .label_product {
+        position: absolute;
+      
+        top: 5px;
+        left: 10px;
+        width: 45px;
+        text-align: center;
+        line-height: 45px;
+        height: 45px;
+        background: #031d2c;
+        border-radius: 100%;
+    }
+        .label_product span {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            display: block;
+        }
+</style>
+
+    <div class="breadcrum-main section-big-py-space">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="breadcrum-contain">
+                        <div>
+                            <h2 align="center">All Product</h2>
+                            <ul>
+                                <li><a href="/Customer/Home/Index">home</a></li>
+                                <li><i class="fa fa-angle-double-right"></i></li>
+                                <li><a href="#">Product </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="container">
+
+    <div class="row">
+        <div id="replaceDiv">
+            <div class="row">
+                @foreach (var item in Model.Products)
+                {
+                    double passPercentage = ((item.Price -item.DisPrice) / item.Price) * 100;
+
+                    int pass = Convert.ToInt32(@passPercentage);
+
+
+                    <div id="collections_block">
+                        <div class="col-md-2 col-sm-5 col-xs-5">
+                            <div class="product product-single">
+
+                                <a href="/Customer/home/Details?id=@item.Id">
+                                    <div class="product-thumb">
+                                        <div class="label_product">
+                                            <span class="label_sale">-@pass%</span>
+                                        </div>
+                                        <img src="@Url.Content(item.Image)" alt="">
+                                    </div>
+                                    <div class="product-body">
+                                        <h3 class="product-price">@item.DisPrice <del class="product-old-price">@item.Price</del></h3>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o empty"></i>
+                                        </div>
+                                        <h2 class="product-name"><a href="#">@item.Name</a></h2>
+
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+
+            <p>@*<button class="btn btn-primary" id="load">Load</button>*@</p>
+            @*<div id="grid"></div>
+            @section scripts{
+                <script>
+                    $(function () {
+                        $('#load').on('click', function () {
+                            $('#grid').load('/Customer/Product/Index');
+                        });
+                    });
+                </script>
+            }*@
+
+        <div class="col-md-12" style="float:right;">
+            @await Html.PartialAsync("_pagingpartial", pagemodel)
+
+            @*@if (totaldata > Model.Products.Count())
+        {
+            <div class="text-center">
+                <button id="ldbtn" class="primary-btn">Load more</button>
+            </div>
+        }
+        
+        @section Scripts{
+            <script>
+                $(document).ready(function () {
+                    $("#ldbtn").click(function (e) {
+                        $.ajax({
+                            url: "/Customer/Product/GetList",
+                            method: "POST",
+                            success: function (result) {
+                                $("#replaceDiv").empty();
+                                $("#replaceDiv").html(result);
+                            }
+                        });
+                    });
+                });
+            </script> }*@
+
+        </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+@*<div class="col-md-12">
+    @if (totaldata > Model.Count())
+    {
+        <div class="text-center">
+            <button id="ldbtn" class="primary-btn">Load more</button>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <p class="text-black-50">No more products !</p>
+        </div>
+    }
+
+    <script>
+                    $(document).ready(function () {
+                        $("#ldbtn").click(function (e) {
+                            $.ajax({
+                                url: "/Product/Index",
+                                method: "POST",
+                                success: function (result) {
+                                    $("#replaceDiv").empty();
+                                    $("#replaceDiv").html(result);
+                                }
+                            });
+                        });
+                    });
+    </script>
+</div>*@

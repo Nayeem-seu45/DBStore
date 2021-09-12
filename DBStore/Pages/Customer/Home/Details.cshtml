@@ -1,0 +1,530 @@
+﻿@page
+@model DBStore.Pages.Customer.Home.DetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+    ViewData["Title"] = "Details";
+
+
+
+    var ratingSum = ViewBag.RatingSum;
+    var ratingCount =/* (int)ViewData["RatingCount"]*/ ViewBag.RatingCount;
+
+    decimal rating = 0;
+    if (ratingCount > 0)
+    {
+        rating = (ratingSum / ratingCount);
+    }
+    var totalRating = decimal.Parse(rating.ToString());
+
+
+
+    //string pagename = "/Customer/Product";
+    //DBStore.Pages.Customer.Home.DetailsModel idmodel = new DBStore.Pages.Customer.Home.DetailsModel() { ProductId = Model.ReviewsObj.ProductId };
+
+    int totaldata = Convert.ToInt32(ViewData["totaldata"]);
+
+
+
+
+    int SN = 1;
+    PagedList pager = new PagedList();
+    int pageNo = 0;
+    if (ViewData["pager"] != null)
+    {
+        pager = ViewBag.pager;
+        pageNo = pager.PageIndex;
+        SN = ((pager.PageIndex * pager.PageSize) - pager.PageSize) + 1;
+    }
+
+    string areaname = "";
+    int reviewsid = Convert.ToInt32(ViewData["ReviewsId"]);
+    string controller = "";
+    string action = "";
+    Pager pagemodel = new Pager() { PagedList = pager, AreaName = areaname, ControllerName = controller, ActionName = action };
+
+}
+
+
+
+<style>
+    .products-tabs {
+        line-height: normal;
+        margin: 0;
+        outline: none;
+        padding: 0;
+        position: relative;
+        z-index: 1;
+        border-bottom: 3px double #ddd;
+        margin-top: 5px;
+        height: 22px;
+        text-align: center;
+        width: 100%;
+    }
+
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        background: #ff6600;
+        border: 2px solid #ff6600;
+        color: #031d2c;
+    }
+
+    .nav-tabs.products-tabs > li > a {
+        line-height: 1.42857143;
+        border-radius: 50px;
+        border: 2px solid #999;
+        padding: 8px 28px;
+        background: #fff;
+    }
+
+    .products-tabs li a {
+        border-bottom: none;
+        color: #8c8b8b;
+        margin-right: 15px;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 600;
+        transition: color 300ms ease-in-out 0s, background-color 300ms ease-in-out 0s, background-position 300ms ease-in-out 0s;
+        padding: 0 20px;
+        letter-spacing: 1px;
+    }
+
+    .nav-tabs > li > a:hover {
+        background: #031d2c;
+        color: #fff;
+        border: 2px solid #333e48;
+    }
+
+    #product-detail-tab.nav-tabs > li {
+        float: none;
+        display: inline-block;
+    }
+
+    .availability.in-stock strong {
+        color: #fff;
+        background-color: #5cb85c;
+        padding: 5px 12px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .starFade {
+        background-image: url('/StarFade.gif');
+        min-width: 30px;
+        min-height: 30px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .starFadeN {
+        background-image: url('/StarFade.gif');
+        min-width: 30px;
+        min-height: 30px;
+        display: inline-block;
+    }
+
+    .starGlow {
+        background-image: url('/starglow.gif');
+        min-width: 30px;
+        min-height: 30px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .starGlowN {
+        background-image: url('/starglow.gif');
+        min-width: 30px;
+        min-height: 30px;
+        display: inline-block;
+    }
+    .delivery-info {
+        background-color: #4e606b;
+        color: #fff;
+        min-width: 230px !important
+    }
+</style>
+
+
+
+
+<div class="section">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="product product-details clearfix" style=" border: 1px solid #e5e5e5;padding: 22px; margin-bottom: 15px; background-color: #fff">
+                <form method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" asp-for="ShoppingCartObj.ProductId" />
+                 
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="col-md-6">
+                        <div id="product-main-view" style="max-height:400px">
+                            <div class="product-view">
+                                <img src="@Url.Content(Model.ShoppingCartObj.Product.Image)" data-imagezoom="true" alt="">
+                            </div>
+                            @if (Model.ShoppingCartObj.Product.Image1 != null)
+                            {
+                                <div class="product-view">
+                                    <img src="@Url.Content(Model.ShoppingCartObj.Product.Image1)" data-imagezoom="true" alt="">
+                                </div>
+                            }
+                            @if (Model.ShoppingCartObj.Product.Image2 != null)
+                            {
+                                <div class="product-view">
+                                    <img src="@Url.Content(Model.ShoppingCartObj.Product.Image2)" data-imagezoom="true" alt="">
+                                </div>
+                            }
+                            @if (Model.ShoppingCartObj.Product.Image3 != null)
+                            {
+                                <div class="product-view">
+                                    <img src="@Url.Content(Model.ShoppingCartObj.Product.Image3)" data-imagezoom="true" alt="">
+                                </div>
+                            }
+                        </div>
+                        <div id="product-view">
+                            <div class="product-view">
+                                <img src="@Url.Content(Model.ShoppingCartObj.Product.Image)" alt="" height="80" width="80" />
+                            </div>
+
+                            @if (Model.ShoppingCartObj.Product.Image1 != null)
+                            {
+                                <div class="product-view">
+                                    <img src="@Url.Content(Model.ShoppingCartObj.Product.Image1)" alt="" height="80" width="80" />
+                                </div>
+                            }
+                            @if (Model.ShoppingCartObj.Product.Image2 != null)
+                            {
+                                <div class="product-view">
+                                    <img src="@Url.Content(Model.ShoppingCartObj.Product.Image2)" alt="" height="80" width="80" />
+                                </div>
+                            }
+                            @if (Model.ShoppingCartObj.Product.Image3 != null)
+                            {
+                                <div class="product-view">
+                                    <img src="@Url.Content(Model.ShoppingCartObj.Product.Image3)" alt="" height="80" width="80" />
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product-body">
+
+                            <h2 class="product-name">@Model.ShoppingCartObj.Product.Name</h2>
+                            <h3 class="product-price"> ৳ @((Model.ShoppingCartObj.Product.DisPrice).ToString("")) <del class="product-old-price"> ৳ @((Model.ShoppingCartObj.Product.Price).ToString(""))</del></h3>
+                            <div>
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o empty"></i>
+                                </div>
+                                <a href="#">   Review(s)</a>
+                                <p class="availability in-stock pull-right">
+                                    Availability:
+                                    @if (Model.ShoppingCartObj.Product.InStock)
+                                    {
+                                        <strong> Available</strong>
+                                    }
+                                    else
+                                    {
+                                        <strong> Out Of Stock</strong>
+                                    }
+
+                                </p>
+                            </div>
+
+
+                            <p><strong>Brand:</strong> @Model.ShoppingCartObj.Product.Brand.Name</p>
+                            <p><strong>Warranty:</strong> @Model.ShoppingCartObj.Product.WarrantyType.Name</p>
+                            <div class="delivery-info p-3 pull-right">
+                                <p style="font-weight:bold; font-size:x-large;">
+                                    Delivery option
+                                </p>
+                                <p>
+                                    <i class="fa fa-location-arrow"></i>
+                                    Cash on Delivery Available
+                                </p>
+                                <p>
+                                    <i class="fa fa-home"></i>
+                                    Home Delivery (24-72 Hours)
+                                </p>
+                                <p>
+                                    <i class="fa fa-check-circle-o"></i>
+                                    100% Original product
+                                </p>
+
+
+                            </div>
+                            <h2>Key Feature</h2>
+                            <p>  @Html.Raw(Model.ShoppingCartObj.Product.KeyFeature)</p>
+
+
+                            <div class="product-btns">
+                                @if (Model.ShoppingCartObj.Product.InStock)
+
+                                {
+
+                                    <div class="qty-input">
+                                        <span class="text-uppercase"><label> Quantity</label> </span>
+                                        <input type="text" asp-for="ShoppingCartObj.Count" class="form-control rounded" style="height:40px; border-radius: 25px;" />
+                                        <span asp-validation-for="ShoppingCartObj.Count" class="text-danger"></span>
+                                    </div>
+
+                                    <button type="submit" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                    <button asp-page="Cat" class="primary-btn" style="background-color:#031d2c"><i class="fa fa-shopping-bag"></i> Back to List</button>
+
+
+                                    <div class="modal fade" id="mdlCart" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
+                                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="border-radius:0px;">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <div class="text-center"><h5 class="modal-title" style="color:#ff6600">Modal title</h5></div>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="button" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+
+                                    <h4 style="background: #EDF2F5; display: inline-block; font-weight: bold; margin-top: 10px; line-height: 42px; padding: 0 50px; ">Out Of Stock</h4>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-xs-12" style=" border: 1px solid #e5e5e5;padding: 22px; background-color: #fff; margin-top: 18px;margin-bottom: 15px;">
+                <div class="products-tab">
+                    <ul id="product-detail-tab" class="nav nav-tabs products-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
+                        <li><a data-toggle="tab" href="#tab2">Reviews(@Model.Reviews.Count())</a></li>
+                        <li><a data-toggle="tab" href="#tab3">Questions</a></li>
+
+                    </ul>
+                    <br />
+                    <br />
+                    <div class="tab-content">
+
+                        <div id="tab1" class="tab-pane fade in active">
+                            <p>
+                                @Html.Raw(Model.ShoppingCartObj.Product.Description)
+                            </p>
+
+                            <table>
+                                <thead>
+                                    <tr>
+
+                                        <th style=" background: #EDF2F5; font-size: 16px; line-height: 30px; font-weight: bold; padding: 6px 20px; margin: 30px 0 0; border-radius: 5px; display: normal" colspan="3">Warranty Details</th>
+
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr>
+
+                                        <td style="padding: 10px 20px; line-height: 22px">@Model.ShoppingCartObj.Product.WarrantyType.Description</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tab2" class="tab-pane fade in">
+
+                            <div class="row">
+                                <div class="col-md-7" style="padding-right: 15px; padding-left: 15px;">
+
+
+                                    <div class="product-reviews">
+                                        <h4>Customer Valuable Reviews:</h4>
+
+                                        @foreach (var item in Model.ListReviews)
+                                        {
+                                            <div class="single-review">
+                                                <div class="review-heading">
+                                                    <div><a href="#"><i class="fa fa-user-o"></i> @item.AddBy</a></div>
+                                                    <div><a href="#"><i class="fa fa-clock-o"></i>@item.AddDate</a></div>
+
+                                                    <div class="review-rating pull-right">
+                                                        @for (var i = 1; i <= item.Rating; i++)
+                                                        {
+
+
+                                                            <span class="starGlown"></span>
+
+                                                        }
+
+                                                        @for (var i = (item.Rating + 1); i < 5; i++)
+                                                        {
+                                                            <span class="starFadeN"></span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="review-body">
+                                                    <p>
+                                                        @Html.Raw(item.Reviews)
+                                                        @if (item.ProductImage != null)
+                                                        {
+                                                            <img src=" @Url.Content(item.ProductImage)" alt="" height="90" width="90" />
+
+                                                        }
+
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        }
+
+
+
+
+                                        @if (Model.Reviews.Count() == 0)
+                                        {
+                                            <h4>NO Reviews Found....</h4>
+                                        }
+                                    </div>
+
+                                </div>
+
+
+
+                                @await Html.PartialAsync("_partialProductReviews")
+
+                            </div>
+                        </div>
+                        <div id="tab3" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-7" style="padding-right: 15px; padding-left: 15px;">
+
+
+                                    <div class="product-reviews">
+                                        <h4>Customer Valuable Questions:</h4>
+
+                                        @foreach (var item in Model.ListQuestion)
+                                        {
+                                            <div class="single-review">
+
+                                                <div class="review-body">
+                                                    <p>
+                                                        <strong style="font-weight:bold;">Q:</strong>@Html.Raw(item.Reviews)
+
+                                                    </p>
+                                                    @if (item.Answer == null)
+                                                    {
+                                                        <p>No Answer yet</p>
+                                                    }
+
+                                                    else {
+                                                    <p> <strong style="font-weight:bold;">A: </strong> @item.Answer</p>
+                                                    }
+                                                   
+                                                </div>
+                                            </div>
+
+                                        }
+
+
+                                        @if (Model.Questions.Count() == 0)
+                                        {
+                                            <h4>NO Questions Found....</h4>
+                                        }
+                                    </div>
+
+                                </div>
+
+
+                                @await Html.PartialAsync("_partialQuestion")
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+              
+            </div>
+        </div>
+    </div>    
+</div>
+
+
+
+@*<div class="section">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">Related Product</h2>
+                </div>
+            </div>
+            @foreach (var item in Model.RelatedProductList)
+
+
+            {
+                <div id="collections_block">
+                    <div class="col-md-2 col-sm-5 col-xs-5">
+
+
+                        <div id="owl-demo1" class="product product-single">
+                            <a href="/Customer/home/Details?id=@item.Id">
+                                <div class="product-thumb N-1">
+                                    <img src="@Url.Content(item.Image)" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <h3 class="product-price">@item.DisPrice <del class="product-old-price">@item.Price</del></h3>
+                                   
+                                    <h2 class="product-name"><a href="#">@item.Name</a></h2>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>*@
+
+
+@section scripts{
+  
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+
+        function SCRate() {
+            for (var i = 1; i <= @totalRating; i++) {
+                $("sRate" + i).attr('class', 'starGlowN');
+            }
+        }
+            $(function (){
+                SCRate();
+
+            });
+    </script>
+
+}

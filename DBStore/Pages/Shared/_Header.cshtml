@@ -1,0 +1,133 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using DBStore.Utility
+
+
+    <header>
+
+        <div id="top-header">
+            <div class="container">
+                <div style="float:left;">
+                    <span>Trusted Online Shop in BD | Fast Delivery</span>
+                </div>
+                <div style="float:right">
+                    <ul class="header-top-links">
+                        <li><a href="/Customer/home/FAQ">FAQ</a></li>
+                        <li><a href="/Customer/Home/abount">About</a></li>
+                        <li><a href="/Customer/Home/Contact">Contact</a></li>
+                        <li><a href="/Customer/home/reviews">Reviews</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="header">
+            <div class="container">
+                <div class="row">
+
+
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="header-logo" @*style="margin-left:8px;"*@>
+                            <a class="logo" href="/Customer/Home/Index">
+                                <img src="~/Deshi-Bipony-png.png"  asp-append-version="true" />
+
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div @*id="search-category-wrap"*@ style="border:none;">
+                            <div class="header-search">
+                                <form>
+                                    @*<div class="search-cat">
+                                        <select class="category-items" name="category">
+                                            <option>All Categories</option>
+                                            <option>Men</option>
+                                            <option>Women</option>
+                                            <option>Jewellery</option>
+                                            <option>Electronics</option>
+                                            <option>Kid</option>
+                                            <option>Bootees Bags</option>
+                                            <option>Clothing</option>
+                                            <option>Footwear</option>
+                                            <option>T-Shirts</option>
+                                            <option>Polo-Shirts</option>
+                                        </select>
+                                    </div>*@
+                                    <input class="input-circle search-input search" @*id="text-search"*@ id="productTilte" type="search" placeholder="Serch for Product">
+                                    <button id="SerchDB" type="button" class="search-btn" @*value="Search"*@><i class="fa fa-search"></i> Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="block-cart">
+                            <ul class="header-btns account-areas">
+
+                                <li class="item">
+                                    @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart) != null)
+                                    {
+
+                                        <a asp-page="/Customer/Cat/Index" class="nav-link text-white-50">
+                                            @{
+                                                var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart);
+                                            }
+
+                                            <span style="font-size:1.5em; color:#ff6600"> <img style="max-width:30px;" src="~/Content/Image/android-chrome-192x192.png" /></span> <span class="Counter">&nbsp;@count</span>
+                                            <span class="text" style="background:#dcdcdc; font-size:15px;" @*padding: 7px 10px 7px;*@>My Cart</span>
+
+                                        </a>
+
+
+                                    }
+
+                                    else
+                                    {
+                                        <a href="#" class="nav-link text-white-50">
+
+                                            <span style="font-size:1.5em; color:#ff6600"><i class="fa fa-shopping-cart"></i></span><span class="Counter">&nbsp;0</span>
+                                            <span class="text" style="background:#dcdcdc; font-size:15px;" @*padding: 7px 10px 7px;"*@>My Cart</span>
+                                        </a>
+                                    }
+                                </li>
+                                <li class="item">
+                                    @await Html.PartialAsync("_LoginPartial")
+                                </li>
+
+                                <li class="nav-toggle">
+                                    <button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        @section Scripts
+    {
+            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+            <script>
+                $(document).ready(function () {
+                    $("#productTilte").o({
+                        source: 'api/searchh/search'
+                    });
+                    $("#SerchDB").click(function (e) {
+                        e.preventDefault();
+                        var qrval = $("#productTilte").val();
+                        window.location.href = "/Search/index?query=" + qrval + "";
+                      
+                    });
+                });
+            </script>
+        }
+
+        </header>

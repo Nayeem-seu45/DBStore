@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!-- Header Account Links Start -->
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="header-account dropdown default-dropdown">
+        <div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
+            <div class="header-btns-icon">
+                <i class="fa fa-user-o"></i>
+            </div>
+            <strong class="text-uppercase">@UserManager.GetUserName(User).Split('@').FirstOrDefault() <i class="fa fa-caret-down"></i></strong>
+
+        </div>
+        <p>Manage</p>
+        <ul class="custom-menu">
+            <li><a href="/Customer/Account/ManageAccount"><i class="fa fa-user-o"></i> Manage Account</a></li>
+            <li><a href="/product/wishlist"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
+            <li><a href="~/Product/checkout"><i class="fa fa-check"></i> Checkout</a></li>
+            <li>
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                    <button id="logout" type="submit" class="nav-link btn btn-small btn-link">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </li>
+}
+@*@if (SignInManager.IsSignedIn(User))
+    {
+        <a id="manage" asp-area="Identity" asp-page="/Account/Manage/Index"><span>@UserManager.GetUserName(User).Split('@').FirstOrDefault()</span></a>
+        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+            <button id="logout" type="submit" class="nav-link btn btn-small btn-link">Logout</button>
+        </form>
+    }*@
+else
+{
+    @*<a id="login" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-unlock"></i> <span>Login</span></a>
+        <a class="" id="register" asp-area="Identity" asp-page="/Account/Register"><i class="fas fa-key"></i> <span>Register</span></a>*@
+    <li class="header-account dropdown default-dropdown">
+        <div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
+            <div class="header-btns-icon">
+                <i class="fa fa-user-o"></i>
+            </div>
+            <strong class="text-uppercase">Account <i class="fa fa-caret-down"></i></strong>
+
+        </div>
+        <p>Manage</p>
+        <ul class="custom-menu">
+            @*<li><a id="login" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-user-o"></i> Manage Account</a></li>*@
+            <li><a id="login" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-unlock"></i> Login</a></li>
+            <li><a id="register" asp-area="Identity" asp-page="/Account/Register"><i class="fa fa-key"></i> Register</a></li>
+
+        </ul>
+    </li>
+}
+
+

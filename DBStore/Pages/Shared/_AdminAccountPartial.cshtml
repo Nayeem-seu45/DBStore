@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using DBStore.Utility
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    var user = UserManager.GetUserAsync(User).Result;
+}
+
+@if(User.IsInRole(SD.ManagerRole))
+{
+<div class="info">
+    <a href="#" class="d-block">@user.UserName </a>
+</div>
+}
+
+else { 
+    <h4 style="color:red;"> Access only for admin</h4>
+}
+
+
+
+

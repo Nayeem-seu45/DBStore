@@ -1,0 +1,241 @@
+﻿@page
+@model DBStore.Pages.Customer.Cat.SummaryModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@using DBStore.Utility
+@{
+    ViewData["Title"] = "Summary";
+
+}
+
+<form method="post">
+    <br />
+
+    @if (Model.detailCart.listCart.Count > 0)
+    {
+        <input asp-for="@Model.detailCart.listCart[0].ApplicationUserId" hidden />
+        <div class="backgroundWhiteBorder">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header bg-dark text-light ml-0 row container" style="background-color:#031d2c;">
+                        <div class="col-md-6">
+                            <i class="fa fa-shopping-cart"></i> &nbsp;
+                            Order Summary
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a href="/Customer/Cat" class="btn btn-outline-info btn-sm" style="font-size:15px;">Back to Cart</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container rounded p-2">
+                            <div class="row">
+                                <div class="col-6 col-lg-6 pb-4">
+                                    <div class="row">
+                                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="text-info">PickUp Details:</span>
+                                        </h4>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-4">
+                                            <label>Name</label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input id="textName" asp-for="@Model.detailCart.OrderHeader.PickUpName" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Phone Number</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input id="textPhone" asp-for="@Model.detailCart.OrderHeader.PhoneNumber" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-3">
+                                            <label asp-for="@Model.detailCart.OrderHeader.CityID"></label>
+
+                                        </div>
+                                        <div class="col-9">
+                                            @Html.DropDownListFor(m => m.detailCart.OrderHeader.CityID, Model.detailCart.CityList,
+                                           "- Please select a City -",
+                                           new { @class = "form-control" })
+                                            <span class="text-danger" asp-validation-for="detailCart.OrderHeader.CityID"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Address</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <textarea id="textAddrss" asp-for="@Model.detailCart.OrderHeader.Address" style="height:100px" class="form-control"> </textarea>
+                                        </div>
+                                    </div>
+
+                                    @* <div class="row my-1">
+                                            <div class="col-3">
+                                                <label>PickupTime</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <input id="timepicker" value="" asp-for="@Model.detailCart.OrderHeader.PickUpTime" type="text" class="form-control" />
+                                            </div>
+                                        </div>*@
+
+                                    <div class="row my-1">
+                                        <div class="col-4">
+                                            <label>Additional Instructions: </label>
+                                        </div>
+                                        <div class="col-9">
+                                            <textarea asp-for="@Model.detailCart.OrderHeader.Comments" style="height:100px" class="form-control"> </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-5 offset-lg-1" style="padding:20px;">
+                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-info">Order Summary:</span>
+                                    </h4>
+                                    <ul class="list-group mb-4">
+                                        @{ var total = 0.0;}
+                                        @foreach (var details in Model.detailCart.listCart)
+                                        {
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <div>
+                                                    <h6 class="my-0">@details.Product.Name</h6>
+                                                    <small class="text-muted">Quantity: @details.Count</small>
+                                                </div>
+                                                <span class="text-muted">৳ @(details.Product.Price * details.Count)</span>
+                                                @{ total += (details.Product.Price * details.Count); @*+'<div id="deliveryfeechnage"> </div>'*@}
+
+
+                                            </li>
+
+
+                                        }
+
+                                        <li class="list-group-item d-flex justify-content-between bg-light">
+                                            <h6 class="my-0">Delivery Fee</h6>
+                                            <div id="deliveryfeechnage"> </div>
+                                        </li>
+
+                                        <li class="list-group-item d-flex justify-content-between bg-light">
+                                            <small class="text-info">Total (BDT)</small>
+                                            <input hidden value="@total" id="currentpriceofitem"/>
+                                            <strong class="text-info" id="totalfeechange">৳ @total.ToString("0.00")</strong>
+                                        </li>
+                                    </ul>
+
+                                    <div class="row">
+                                        <div class="col-lg-2 col-sm-4">
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 ml-auto">
+
+                                            <h5>Payment Method:</h5>
+
+
+
+                                            <div class="form-group row">
+                                                
+                                                <div class="col-9" id="payment">
+                                                    @Html.DropDownListFor(m => m.detailCart.OrderHeader.PaymentMathodID, Model.detailCart.PaymnetList,
+                                                   "- Please select a Payment Method -",
+                                                   new { @class = "form-control" })
+                                                    <span class="text-danger" asp-validation-for="detailCart.OrderHeader.PaymentMathodID"></span>
+                                                    <br />
+                                                    <div>
+                                                        <h3> Send Money Number: 01936209794(personal)</h3>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+
+                                           
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-12 col-md-4 offset-md-8">
+                                <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-success form-control">Place Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+</form>
+
+@section scripts{
+    <script>
+
+
+        $(document).ready(function () {
+            $('#detailCart_OrderHeader_CityID').change(function () {
+                var url = '/api/Product/GetDeliveryFee';
+                var ddlsource = "#detailCart_OrderHeader_CityID";
+                var itemsource = "#currentpriceofitem";
+                $.getJSON(url, { CityId: $(ddlsource).val() }, function (data) {
+                    var items = '';
+                    var deliveryfee = parseInt(data);
+                    var itemprice = parseInt($(itemsource).val());
+                    var totalprice = deliveryfee + itemprice;
+                    items += "<strong class='text-info'>৳" + data + "</strong>";
+                    var itemtotalprices = "৳" + totalprice + "";
+                    $("#deliveryfeechnage").empty();
+                    $('#deliveryfeechnage').html(items);
+                    $("#totalfeechange").empty();
+                    $('#totalfeechange').html(itemtotalprices);
+                });
+            });
+
+        });
+        //$(function () {
+        //    $("#datepicker").datepicker({ minDate: 1, maxDate: "+1W" });
+        //    $("#timepicker").timepicker({ 'minTime': '11:00 AM', 'maxTime': '9:00PM', step: '30' });
+        //});
+
+        //detailCart_OrderHeader_CityID
+        function validateInput() {
+            var name = document.getElementById("textName").value;
+            var phone = document.getElementById("textPhone").value;
+            var address = document.getElementById("textAddrss").value;
+            var payment = document.getElementById("payment").value;
+
+            if (name.toString() == '') {
+                swal("Error", "Please enter pickup Name", "error");
+                return false;
+            }
+
+            if (phone.toString() == '') {
+                swal("Error", "Please select Phone Number", "error");
+                return false;
+            }
+            if (address.toString() == '') {
+                swal("Error", "Please enter pickup Address", "error");
+                return false;
+            }
+
+            if (payment.toString() == '') {
+                swal("Error", "Please Select Payment Methods", "error");
+                return false;
+            }
+
+        }
+    </script>
+}

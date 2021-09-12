@@ -1,0 +1,121 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<style>
+    .eye-show {
+        padding: 10px;
+        position: absolute;
+        right: 0;
+        margin-right: 5px;
+        bottom: 98px;
+        font-size: 16px;
+        line-height: 24px;
+        cursor: pointer;
+    }
+    }
+</style>
+<br />
+<div class="py-4 my-4">
+    <h1 class="col-12 text-center py-4">@ViewData["Title"]</h1>
+
+    <div class=" form-group">
+
+        <div class="logreg-from">
+            <div class="card-body px-lg-5 pt-4">
+                @*<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizonal">
+
+                        <div class="social-login pb-0 mn-0">
+                            @foreach (var provider in Model.ExternalLogins)
+
+                            {
+                                <div class="col=6">
+                                    @if(provider.Name.ToLower().Contains("facebook"))
+                                    {
+                                        <button type="submit" class="btn btn-block facebook-btn form-control" name="provider" value="@provider.Name"></button>
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                    </form>*@
+
+
+
+                <div class="col-md-4 offset-4">
+                    <section>
+                        <form id="account" method="post">
+                            <div class="form-group">
+                                <p class="before-login-text">Welcome back! Sign in to your Deshibipony account</p>
+                                <p>
+                                    New member? <a style="color:#ff6600;" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">  Register</a> here
+                                </p>
+                            </div>
+
+                            <hr />
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Input.Email"></label>
+                                <input type="email" placeholder="Enter Your Register Email Addrsss" asp-for="Input.Email" class="form-control" />
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" >
+                                <label asp-for="Input.Password"></label>
+                                <input asp-for="Input.Password" class="form-control" TextMode = "Password" ID = "txtPassword" />
+                                <div class="eye-show">
+                                    <span id="toggle_pwd" asp-validation-for="Input.Password" class="text-danger fa fa-fw fa-eye field_icon"></span>
+                                </div>
+                               
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label asp-for="Input.RememberMe">
+                                        <input asp-for="Input.RememberMe" />
+                                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+
+                                        <a style="margin-left: 9px;" id="forgot-password" class="text-danger" href="/Identity/Account/forgotpassword">Forgot your password?</a>  @*asp-page="#"./ForgotPassword*@
+
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Log in</button>
+                            </div>
+
+                        </form>
+                    </section>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        //function toggleShowPassword() {
+        //    var passwordTextBox = document.getElementById('passwordTextBox');
+        //    if (passwordTextBox.getAttribute('type') == 'text') {
+        //        passwordTextBox.type = 'password';
+        //    }
+        //    else {
+        //        passwordTextBox.type = 'text';
+        //    }
+        //}
+
+        $(function () {
+            $("#toggle_pwd").click(function () {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+                var type = $(this).hasClass("fa-eye-slash") ? "text" : "password";
+                $("[id*=txtPassword]").attr("type", type);
+            });
+        });
+    </script>
+   
+}

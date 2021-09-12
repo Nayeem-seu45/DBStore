@@ -1,0 +1,104 @@
+﻿@page
+@model DBStore.Pages.Customer.Product.ShopBy399Model
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+    @{
+        ViewData["Title"] = "ShopByBrand";
+        Layout = "~/Pages/Shared/_Layout.cshtml";
+        int totaldata = Convert.ToInt32(ViewData["totaldata"]);
+
+
+
+
+        int SN = 1;
+        PagedList pager = new PagedList();
+        int pageNo = 0;
+        if (ViewData["pager"] != null)
+        {
+            pager = ViewBag.pager;
+            pageNo = pager.PageIndex;
+            SN = ((pager.PageIndex * pager.PageSize) - pager.PageSize) + 1;
+        }
+
+        string pagename = "/Customer/Product";
+        Pager pagemodel = new Pager() { PagedList = pager, PageName = pagename };
+
+
+    }
+
+
+    <div class="breadcrum-main section-big-py-space">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="breadcrum-contain">
+                        <div>
+                            
+                            <ul>
+                                <li><a href="/Customer/Home/Index">home</a></li>
+                                <li><i class="fa fa-angle-double-right"></i></li>
+                                <li><a href="#">Product</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+
+        <div class="row">
+            <div id="replaceDiv">
+                <div class="row">
+                    @if (Model.Products.Count() == 0)
+                    {
+                        <div id="collections_block">
+                            <div class="col-md-12 text-center">
+                                <h3 class="tex-danger">No product found!</h3>
+                            </div>
+                        </div>
+                    }
+
+                    @foreach (var item in Model.Products)
+                    {
+                        <div id="collections_block">
+                            <div class="col-md-2 col-sm-5 col-xs-5">
+                                <div class="product product-single">
+                                    <a href="/Customer/home/Details?id=@item.Id">
+                                        <div class="product-thumb">
+                                            <img src="@Url.Content(item.Image)" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-price">@item.DisPrice <del class="product-old-price">@item.Price</del></h3>
+                                            <div class="product-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o empty"></i>
+                                            </div>
+                                            <h2 class="product-name"><a href="#">@item.Name</a></h2>
+
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+                <div class="col-md-12">
+                    @await Html.PartialAsync("_pagingpartial", pagemodel)
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+

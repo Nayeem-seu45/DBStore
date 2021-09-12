@@ -1,0 +1,615 @@
+﻿@page
+@model DBStore.Pages.Customer.Home.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+
+
+
+}
+
+<style>
+    .label_product {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        width: 45px;
+        text-align: center;
+        line-height: 45px;
+        height: 45px;
+        background: #031d2c;
+        border-radius: 100%;
+    }
+
+        .label_product span {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            display: block;
+        }
+</style>
+
+<div id="home">
+
+    <div class="container">
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 two-block">
+
+            <div class="home-wrap">
+
+                <div id="home-slick">
+                    @foreach (var slideShow in Model.SlideShows)
+                    {
+
+
+                        <div class="banner banner-1">
+                            <img src="@Url.Content(slideShow.ImgUrl)" alt="" class="w-100 img-fluid">
+
+
+                            <div class="banner-caption bnr_clip position-relative">
+
+                                <h3 style="margin-left:-20px;">@slideShow.PrimaryText </h3>
+
+                                @*<p class="text-uppercase py-2">on special sale</p>*@
+                                @*<a style="float:left;" href="~/Product/index" class="primary-btn">@slideShow.OtherText</a>*@
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="section">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">Shop by Department</h2>
+                </div>
+            </div>
+
+            @foreach (var item in Model.CategoryList)
+            {
+                <div id="collections_block">
+                    <div class="col-md-2 col-sm-4 col-xs-4">
+                        <a asp-page="/Customer/Product/Shopbycategory" asp-route-id="0" asp-route-catid="@item.Id">
+                            <div id="DBC" style="background-color:#f8faf3;padding:2px;margin-bottom:3px;border-radius:3px;text-align:center">
+                                <div class="product product-singles A-1">
+                                    <div class="product-thumbs N-1">
+                                        <img src="@Url.Content(item.CatIcon)" alt="">
+                                    </div>
+                                    <h2 class="product-name">@item.Name</h2>
+                                </div>
+                            </div>
+
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+<div class="section">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">Shop by Brand</h2>
+                </div>
+            </div>
+
+            @foreach (var item in Model.BrandList)
+            {
+                <div id="collections_block">
+                    <div class="col-md-2 col-sm-4 col-xs-4">
+
+                        <a asp-page="/Customer/Product/Shopbybrand" asp-route-id="0" asp-route-catid="@item.Id">
+                            <div class="DBC" style="background-color:#f8faf3;padding:2px;margin-bottom:3px;border-radius:3px;text-align:center">
+                                <div class="product product-singles A-1">
+                                    <div class="product-thumbs N-1">
+                                        <img src="@Url.Content(item.BrandIcon)" alt="">
+                                    </div>
+                                    <h2 class="product-name">@item.Name</h2>
+                                </div>
+                            </div>
+
+                        </a>
+                    </div>
+                </div>
+            }
+
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="section">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">Budget Deals</h2>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <a asp-page="/Customer/Product/Shopby99">
+                    <img style="width:242px;" src="~/Untitled-1-[RecoveredHG].png" asp-append-version="true" />
+                </a>
+
+                <a asp-page="/Customer/Product/Shopby199">
+                    <img style="width:242px;" src="~/Untitled-1-[Recovered]g.png" asp-append-version="true" />
+                </a>
+
+                <a asp-page="/Customer/Product/Shopby399">
+                    <img style="width:242px;" src="~/Untitled-1-[Rhecovered].png" asp-append-version="true" />
+                </a>
+                <a asp-page="/Customer/Product/Shopby499">
+                    <img style="width:242px;" src="~/Untitled-1-[RecovzZered].png" asp-append-version="true" />
+                </a>
+                <a asp-page="/Customer/Product/Shopby899">
+                    <img style="width:242px;" src="~/Untitled-1-[Recohvered].png" asp-append-version="true"/>
+                </a>
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="section">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">Featured Products</h2>
+                </div>
+            </div>
+            @foreach (var item in Model.FeatureProduct)
+
+            {
+                double passPercentage = ((item.Price - item.DisPrice) / item.Price) * 100;
+
+                int pass = Convert.ToInt32(@passPercentage);
+                <div id="collections_block">
+                    <div class="col-md-2 col-sm-5 col-xs-5">
+                        <div id="owl-demo1" class="product product-single">
+                            <a href="/Customer/home/Details?id=@item.Id">
+                                <div class="product-thumb N-1">
+                                    <div class="label_product">
+                                        <span class="label_sale">-@pass%</span>
+                                    </div>
+                                    <img src="@Url.Content(item.Image)" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <h3 class="product-price">@item.DisPrice <del class="product-old-price">@item.Price</del></h3>
+                                    <div class="product-rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o empty"></i>
+                                    </div>
+                                    <h2 class="product-name"><a href="#">@item.Name</a></h2>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="md-4">
+            <img src="~/Content/Image/Banner/flower.jpg" class="w-100 img-fluid" style="margin-top:5px;"  asp-append-version="true"/>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="section">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">Computer Accesoriees</h2>
+                </div>
+            </div>
+            @foreach (var item in Model.ProductList.Where(s => s.CategoryId == 4).Take(12))
+
+            {
+                <div id="collections_block">
+                    <div class="col-md-2 col-sm-5 col-xs-5">
+
+
+                        <div id="owl-demo1" class="product product-single">
+                            <a href="/Customer/home/Details?id=@item.Id">
+                                <div class="product-thumb N-1">
+                                    <img src="@Url.Content(item.Image)" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <h3 class="product-price">@item.DisPrice <del class="product-old-price">@item.Price</del></h3>
+                                    <div class="product-rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o empty"></i>
+                                    </div>
+                                    <h2 class="product-name"><a href="#">@item.Name</a></h2>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="md-4">
+            <img src="~/Content/Image/Banner/mobile-bubble.jpg" class="w-100 img-fluid" style="margin-top:5px;"  asp-append-version="true" />
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="section">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">Smart Phones</h2>
+                </div>
+            </div>
+            @foreach (var item in Model.ProductList.Where(s => s.CategoryId == 11).Take(12))
+
+            {
+                <div id="collections_block">
+                    <div class="col-md-2 col-sm-5 col-xs-5">
+
+
+                        <div id="owl-demo1" class="product product-single">
+                            <a href="/Customer/home/Details?id=@item.Id">
+                                <div class="product-thumb N-1">
+                                    <img src="@Url.Content(item.Image)" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <h3 class="product-price">@item.DisPrice <del class="product-old-price">@item.Price</del></h3>
+                                    @*<div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o empty"></i>
+                                        </div>*@
+                                    <h2 class="product-name"><a href="#">@item.Name</a></h2>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="md-4">
+            <img src="~/Content/Image/Banner/Grox.jpg" class="w-100 img-fluid" style="margin-top:5px;"  asp-append-version="true" />
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="section">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">Groceries</h2>
+                </div>
+            </div>
+            @foreach (var item in Model.ProductList.Where(s => s.CategoryId == 2).Take(12))
+
+            {
+                <div id="collections_block">
+                    <div class="col-md-2 col-sm-5 col-xs-5">
+
+
+                        <div id="owl-demo1" class="product product-single">
+                            <a href="/Customer/home/Details?id=@item.Id">
+                                <div class="product-thumb N-1">
+                                    <img src="@Url.Content(item.Image)" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <h3 class="product-price">@item.DisPrice <del class="product-old-price">@item.Price</del></h3>
+                                    <div class="product-rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o empty"></i>
+                                    </div>
+                                    <h2 class="product-name"><a href="#">@item.Name</a></h2>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="md-4">
+            <img src="~/Content/Image/Banner/BOOKS-[Recovered].jpg" class="w-100 img-fluid" style="margin-top:5px;"  asp-append-version="true" />
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="section">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">Book</h2>
+                </div>
+            </div>
+            @foreach (var item in Model.ProductList.Where(s => s.CategoryId == 11).Take(12))
+
+            {
+                <div id="collections_block">
+                    <div class="col-md-2 col-sm-5 col-xs-5">
+
+
+                        <div id="owl-demo1" class="product product-single">
+                            <a href="/Customer/home/Details?id=@item.Id">
+                                <div class="product-thumb N-1">
+                                    <img src="@Url.Content(item.Image)" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <h3 class="product-price">@item.DisPrice <del class="product-old-price">@item.Price</del></h3>
+                                    <div class="product-rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o empty"></i>
+                                    </div>
+                                    <h2 class="product-name"><a href="#">@item.Name</a></h2>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+<section class="contact-banner contact-banner-inverse">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="contact-banner-contain">
+                    <div class="contact-banner-img">
+
+                        <img src="~/cell-phone.png" class="  img-fluid" alt="call-banner" />
+                    </div>
+                    <div> <h3>if you have any question please call us</h3></div>
+                    <div><h2>01760-900694</h2></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="section-big-py-space">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class=" banner-wrap banner banner-2">
+                    <div class="banner-img">
+                        <img src="~/content/Image/OnlineShopping-FeaturedImage-Spring2018.jpg" alt=""  asp-append-version="true">
+                    </div>
+                    <div class="banner-caption">
+                        <h2 class="white-color">NEW<br>COLLECTION</h2>
+                        <a href="/product/newest" class="primary-btn">Shop Now </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 two-block">
+
+                <div class="slider ">
+
+                </div>
+
+            </div>
+
+            <div style="background-color:white;" class="col-md-3 col-sm-6 col-xs-6">
+                <div class="best_seller_titile">
+                    <h3 align="center">BEST SALLING</h3>
+                </div>
+                <div class="best_selling">
+                    <div class="product_img">
+
+                        <img src="~/Content/Image/asas.png"  asp-append-version="true" />
+                    </div>
+
+                    <div class="product_content">
+
+
+                        <h3 class="product-price"> BDT-980</h3>
+                        <div class="product-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o empty"></i>
+                        </div>
+                        <h2 class="product-name"><a href="/Customer/home/Details?id=9">Mi Wifi Repeater Pro 2 </a></h2>
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="best_selling">
+                    <div class="product_img">
+
+                        <img src="~/Content/Image/Lenovo-LivePods-LP1S-TWS-Bluetooth-Earphone.jpg"  asp-append-version="true" />
+                    </div>
+
+                    <div class="product_content">
+
+
+                        <h3 class="product-price">BDT-950 </h3>
+                        <div class="product-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o empty"></i>
+                        </div>
+                        <h2 class="product-name"><a href="/Customer/home/Details?id=10">Lenovo LivePods LP1S</a></h2>
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="best_selling">
+                    <div class="product_img">
+
+                        <a href="/Customer/home/Details?id=6"><img src="~/Content/Image/UiiSii-HM12-In-Ear-Earphone-1.jpg"  asp-append-version="true"/></a>
+                    </div>
+
+                    <div class="product_content">
+
+
+                        <h3 class="product-price">BDT-350</h3>
+                        <div class="product-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o empty"></i>
+                        </div>
+                        <h2 class="product-name"><a href="/Customer/home/Details?id=1">UiiSii Hm12</a></h2>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+@*<div class="move-text">
+        <div class="marquee"><a href="offers.html"> New collections are available here...... <span>Get extra 10% off on everything | no extra taxes </span> <span> Try shipping pass free for 15 days with unlimited</span></a></div>
+        <script type="text/javascript" src="~/js/jquery.marquee.min.js"></script>
+        <script>
+                          $('.marquee').marquee({ pauseOnHover: true });
+
+        </script>
+    </div>*@
+
+
+

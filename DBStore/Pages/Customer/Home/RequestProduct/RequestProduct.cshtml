@@ -1,0 +1,171 @@
+﻿@page
+@model DBStore.Pages.Customer.Home.RequestProduct.RequestProductModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "RequestProduct";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+
+
+}
+
+
+<div class="deshibipony-content">
+
+    <br />
+    <h3 style="text-align:center;">Write down a your needed product information</h3>
+    <br />
+    @Html.AntiForgeryToken()
+    <section class="main-container col1-layout">
+        <div class="main container">
+
+            <div class="page-content">
+                <div class="col-md-12">
+
+
+                    <div class="col-md-8">
+                        <div class="account-login">
+
+
+
+                            <form method="post" asp-action="RequestProduct" enctype="multipart/form-data">
+
+
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                @if (Model.RequestProductObj.RequestProduct.Id != 0)
+                                {
+                                    <input type="hidden" asp-for="RequestProductObj.RequestProduct.Id" />
+                                }
+
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Your Name</label>
+
+                                            <input id="textName" asp-for="@Model.RequestProductObj.RequestProduct.YourName" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Your Mail Address</label>
+
+                                            <input id="textEmail" asp-for="@Model.RequestProductObj.RequestProduct.Email" type="email" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="RequestProductObj.RequestProduct.ProductName"></label>
+
+
+                                        <input class="form-control" asp-for="RequestProductObj.RequestProduct.ProductName" />
+                                        <span class="text-danger" asp-validation-for="RequestProductObj.RequestProduct.ProductName"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+
+                                        <label asp-for="RequestProductObj.RequestProduct.ProductModel"></label>
+
+                                        <input class="form-control" asp-for="RequestProductObj.RequestProduct.ProductModel" />
+                                        <span class="text-danger" asp-validation-for="RequestProductObj.RequestProduct.ProductModel"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label asp-for="RequestProductObj.RequestProduct.Description"></label>
+
+
+                                        <textarea class="form-control" asp-for="RequestProductObj.RequestProduct.Description" id="txtDesc" style="height:200px;"> </textarea>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="RequestProductObj.RequestProduct.ImgUrl"></label>
+                                            <input type="file" class="form-control" name="files" id="uploadBox" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <a asp-page="./Index" class="btn btn-success form-control">Back to Home</a>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            @if (Model.RequestProductObj.RequestProduct.Id != 0)
+                                            {
+                                                <button type="submit" class="btn btn-primary form-control"> Update</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="submit" onclick="return ValidateInput()" class="btn btn-primary form-control"> Request Product</button>
+                                            }
+
+
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                        <h3>"Happy Shopping"</h3>
+                        <p>Shopping with Deshibipony</p>
+                        <img src="~/p3.png" style="max-width:240px;" />
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</div>
+
+
+
+@section Scripts{
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal("Error", "Please Select an Image", "error")
+                return false;
+            }
+            return true;
+        };
+    </script>
+}
+

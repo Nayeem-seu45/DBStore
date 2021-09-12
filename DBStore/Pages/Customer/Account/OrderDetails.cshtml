@@ -1,0 +1,363 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using DBStore.Utility
+
+@model DBStore.Pages.Customer.Account.OrderDetailsModel
+@{
+    ViewData["Title"] = "OrderDetails";
+    Layout = "~/Pages/Shared/_LayoutDashboard.cshtml";
+}
+
+<style>
+    .dashboard ul li a {
+        font-size: 15px;
+        color: #fff;
+        font-weight: 500;
+        text-transform: capitalize;
+        background: #031d2c;
+        border-radius: 3px;
+    }
+
+        .dashboard ul li a.active {
+            background: #ff6600;
+        }
+
+    .dashboard ul li {
+        margin-bottom: 5px;
+    }
+
+        .dashboard ul li a:hover {
+            background: #ff6600;
+            color: #fff;
+        }
+
+        .dashboard ul li button:hover {
+            background: #ff6600;
+            color: #fff;
+        }
+
+    .dash__table-wrap a {
+        font-weight: bolder;
+    }
+</style>
+<div class="deshibipony-content">
+
+
+    <div class="u-s-p-y-60">
+
+
+        <div class="section__content">
+            <div class="container">
+                <div class="breadcrumb">
+                    <div class="breadcrumb__wrap">
+                        <ul class="breadcrumb__list">
+                            <li class="has-separator">
+
+                                <a href=" /Customer/Home/Index">Home</a>
+                            </li>
+                            <li class="is-marked">
+
+                                <a href="#">My Account</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="section_content">
+        <div class="dash">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+
+                        <div class="dashboard dash__box--shadow u-s-m-b-30">
+                            <div class="dash__pad-1">
+
+                                <span class="dash__text u-s-m-b-16">Hello, @UserManager.GetUserName(User).Split('@').FirstOrDefault() </span>
+                                <ul class="nav flex-column">
+                                    <li>
+
+                                        <a href="/Customer/Account/Dashboard">Dashboard</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="/Customer/Account/manageAccount">Account Details</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="/Customer/Account/order">My Orders</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="dash-track-order.html">Track Order</a>
+                                    </li>
+                                    <li>
+
+                                        <form style=" background: #031d2c;" id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                            <button style="text-decoration: none;border-radius: 3px; color: #fff; font-size: 15px; font-weight: 500; " id="logout" type="submit" class="nav-link btn btn-small btn-link">Logout</button>
+                                        </form>
+
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="dash__box dash__box--bg-white dash__box--shadow dash__box--w">
+                            <div class="dash__pad-1">
+                                <ul class="dash__w-list">
+                                    <li>
+                                        @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart) != null)
+                                        {
+                                            
+
+                                        <div class="dash__w-wrap">
+                                            @{
+                                                var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart);
+                                            }
+
+                                            <span class="dash__w-icon dash__w-icon-style-1"><i class="fa fa-shopping-cart"></i></span>
+
+                                            <span class="dash__w-text">@count</span>
+
+                                            <span class="dash__w-name">Orders Placed</span>
+                                        </div>
+                                        }
+                                    </li>
+                                    <li>
+                                        <div class="dash__w-wrap">
+
+                                            <span class="dash__w-icon dash__w-icon-style-2"><i class="fa fa-times"></i></span>
+
+                                            <span class="dash__w-text">0</span>
+
+                                            <span class="dash__w-name">Cancel Orders</span>
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-9 col-md-12">
+                        <h1 class="dash__h1 u-s-m-b-30">Order Details</h1>
+                        <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                            <div class="dash__pad-2">
+                                <div class="dash-l-r">
+                                    <div>
+
+                                        <div class="manage-o__text-2 u-c-secondary">Order #@Model.orderDetails.OrderId</div>
+                                    </div>
+                                    <div class="manage-o__text u-c-silver">Placed on @Model.orderHeaders.OrderDate</div>
+
+                                    <div>
+                                        <div class="manage-o__text-2 u-c-silver">
+                                            Total:
+
+                                            <span class="manage-o__text-2 u-c-secondary"> ৳ @Model.orderHeaders.OrderTotal</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                            <div class="dash__pad-2">
+                                <div class="manage-o">
+                                    <div class="manage-o__header u-s-m-b-30">
+                                        <div class="manage-o__icon">
+                                            <i class="fas fa-box u-s-m-r-5"></i>
+
+                                            <span class="manage-o__text">Package @Model.orderDetails.OrderId</span>
+                                        </div>
+                                    </div>
+                                    <div class="dash-l-r">
+                                        <div class="manage-o__text u-c-secondary">Delivered on 26 Oct 2016</div>
+                                        <div class="manage-o__icon">
+                                            <i class="fa fa-truck u-s-m-r-5"></i>
+
+                                            <span class="manage-o__text">Standard</span>
+                                        </div>
+                                    </div>
+                                    <div class="manage-o__timeline">
+                                        <div class="timeline-row">
+
+                                            @if (Model.orderHeaders.Status == SD.StatusSubmitted)
+                                            {
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <div class="timeline-step">
+                                                        <div class="timeline-l-i timeline-l-i--finish">
+
+                                                            <span class="timeline-circle"></span>
+                                                        </div>
+
+                                                        <span class="timeline-text">Processing</span>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                            @if (Model.orderHeaders.Status == SD.StatusShipping)
+                                            {
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <div class="timeline-step">
+                                                        <div class="timeline-l-i timeline-l-i--finish">
+
+                                                            <span class="timeline-circle"></span>
+                                                        </div>
+
+                                                        <span class="timeline-text">Processing</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <div class="timeline-step">
+                                                        <div class="timeline-l-i timeline-l-i--finish">
+
+                                                            <span class="timeline-circle"></span>
+                                                        </div>
+
+                                                        <span class="timeline-text">Shipped</span>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                            @if (Model.orderHeaders.Status == SD.StatusCompleted)
+                                            {
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <div class="timeline-step">
+                                                        <div class="timeline-l-i timeline-l-i--finish">
+
+                                                            <span class="timeline-circle"></span>
+                                                        </div>
+
+                                                        <span class="timeline-text">Processing</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <div class="timeline-step">
+                                                        <div class="timeline-l-i timeline-l-i--finish">
+
+                                                            <span class="timeline-circle"></span>
+                                                        </div>
+
+                                                        <span class="timeline-text">Shipped</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <div class="timeline-step">
+                                                        <div class="timeline-l-i timeline-l-i--finish">
+
+                                                            <span class="timeline-circle"></span>
+                                                        </div>
+
+                                                        <span class="timeline-text">Deliverd</span>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="manage-o__description">
+                                        <div class="description__container">
+                                            @*<div class="description__img-wrap">
+
+                                                <img class="u-img-fluid" src="@Url.Content()" alt="">
+                                            </div>*@
+                                            <div class="description-title">@Model.orderDetails.Name</div>
+                                        </div>
+
+                                        <div class="description__info-wrap">
+                                            <div>
+
+                                                <span class="manage-o__text-2 u-c-silver">
+                                                    Quantity:
+
+                                                    <span class="manage-o__text-2 u-c-secondary">@Model.orderDetails.Count</span>
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span class="manage-o__text-2 u-c-silver">
+                                                    Total:
+
+                                                    <span class="manage-o__text-2 u-c-secondary">৳ @Model.orderHeaders.OrderTotal </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="dash__box dash__box--bg-white dash__box--shadow u-s-m-b-30">
+                                    <div class="dash__pad-3">
+                                        <h2 class="dash__h2 u-s-m-b-8">Shipping Address</h2>
+                                        <h2 class="dash__h2 u-s-m-b-8">@Model.orderHeaders.PickUpName</h2>
+
+                                        <span class="dash__text-2">@Model.orderHeaders.Address</span>
+
+                                        <span class="dash__text-2">@Model.orderHeaders.PhoneNumber</span>
+                                    </div>
+                                </div>
+                                <div class="dash__box dash__box--bg-white dash__box--shadow dash__box--w">
+                                    <div class="dash__pad-3">
+                                        <h2 class="dash__h2 u-s-m-b-8">Billing Address</h2>
+                                        <h2 class="dash__h2 u-s-m-b-8">Md.Abu Nayeem</h2>
+
+                                        <span class="dash__text-2">Khikhet,Nikunja-2, dhaka</span>
+
+                                        <span class="dash__text-2">(+088) 01936209794</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="dash__box dash__box--bg-white dash__box--shadow u-h-100">
+                                    <div class="dash__pad-3">
+                                        <h2 class="dash__h2 u-s-m-b-8">Total Summary:</h2>
+                                        <div class="dash-l-r u-s-m-b-8">
+                                            <div class="dash__text-2">Subtotal</div>
+                                            <div class="manage-o__text-2 u-c-secondary">৳ @Model.orderHeaders.OrderTotal</div>
+                                        </div>
+                                        <div class="dash-l-r u-s-m-b-8">
+                                            <div class="dash__text-2">Shipping Fee</div>
+                                            <div class="manage-o__text-2 u-c-secondary">@Model.DeliveryFee</div>
+                                        </div>
+                                        <div class="dash-l-r u-s-m-b-8">
+                                            <div class="manage-o__text-2 u-c-secondary">Total</div>
+                                            @{
+                                                double total = Model.orderHeaders.OrderTotal + Model.DeliveryFee;
+                                            }
+                                            <div class="manage-o__text-2 u-c-secondary">৳ @total </div>
+                                        </div>
+
+                                        @*<span class="dash__text-2">Paid by @Model.orderHeaders.PaymentMathodID.ToString()</span>*@
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

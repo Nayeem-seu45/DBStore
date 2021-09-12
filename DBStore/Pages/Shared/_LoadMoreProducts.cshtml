@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Models.Product>
+@{
+
+    int totaldata = ViewBag.count;
+}
+<div class="row">
+    @foreach (var item in Model)
+    {
+
+        <div class="col-md-2 col-sm-5 col-xs-5">
+            <div class="product product-single">
+                <a href="/Product/Details?id=@item.Id">
+                    <div class="product-thumb">
+                        <img src="@Url.Content(item.Image)" alt="">
+                    </div>
+                    <div class="product-body">
+                        <h3 class="product-price">@item.DisPrice <del class="product-old-price">@item.Price</del></h3>
+                        <div class="product-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o empty"></i>
+                        </div>
+                        <h2 class="product-name"><a href="#">@item.Name</a></h2>
+
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+</div>
+<p><button class="btn btn-primary" id="load">Load</button></p>
+<div id="grid"></div>
+@section scripts{
+    <script>
+        $(function () {
+            $('#load').on('click', function () {
+                $('#grid').load('/Customer/Product/Index');
+            });
+        });
+    </script>
+}
+@*<div class="col-md-12">
+    @if (totaldata > Model.Count())
+    {
+        <div class="text-center">
+            <button id="ldbtn" class="primary-btn">Load more</button>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <p class="text-black-50">No more products !</p>
+        </div>
+    }
+
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+                $("#ldbtn").click(function (e) {
+                    $.ajax({
+                        url: "/Customer/Product/Index",
+                        method: "POST",
+                        success: function (result) {
+                            $("#replaceDiv").empty();
+                            $("#replaceDiv").html(result);
+                        }
+                    });
+                });
+            });
+        </script>
+    }
+    </div>*@

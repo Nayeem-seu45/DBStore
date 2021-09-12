@@ -1,0 +1,105 @@
+﻿@page "{id?}"
+@model DBStore.Pages.Customer.Cat.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+    @{
+        ViewData["Title"] = "Index";
+    }
+
+
+    <form method="post">
+
+        <br />
+
+        @if (Model.OrderDetailsCartVM.listCart.Count > 0)
+        {
+            <input asp-for="@Model.OrderDetailsCartVM.listCart[0].ApplicationUserId" hidden />
+            <div class="backgroundWhiteBorder">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header bg-dark text-light ml-0  container" style="background-color:#031d2c;">
+                            <div class="col-md-6">
+                                <i class="fa fa-shopping-cart"></i> &nbsp;
+                                Shopping Cart
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a asp-page="../Home/Index" class="btn btn-outline-info btn-sm" style="font-size:15px;">Continue Shopping</a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                            @foreach (var item in Model.OrderDetailsCartVM.listCart)
+                            {
+                                <div class="row">
+                                    <div class="d-none d-lg-block col-lg-2 text-center py-2">
+                                        <img src="@Url.Content(item.Product.Image)" class="rounded" width="120" height="80" />
+                                    </div>
+                                    <div class="col-12 text-sm-center col-lg-5 text-lg-left">
+                                        <h4><strong>@item.Product.Name</strong></h4>
+                                    </div>
+                                    <div class="col-12 text-sm-center col-lg-5 text-lg-right row">
+                                        <div class="col-4 text-md-right" style="padding-top:5px;">
+                                            <h4><strong>৳ @item.Product.Price <span class="text-muted">x</span> @item.Count </strong></h4>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-lg-6" style="margin-left:100px;margin-top:-25px;">
+                                            <div class="float-right mx-1">
+                                                <button type="submit" class="btn btn-primary" asp-page-handler="plus" asp-route-cartId="@item.Id">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            <div class="float-right mx-1">
+                                                <button type="submit" class="btn btn-danger" asp-page-handler="minus" asp-route-cartId="@item.Id">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-2 col-sm-4 col-lg-2 text-right" style="margin-top:-25px;">
+                                            <button type="submit" class="btn btn-outline-danger" asp-page-handler="remove" asp-route-cartId="@item.Id">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+                            <hr />
+
+
+
+                            <div class="col-12 col-md-5">
+
+                            </div>
+                            <div class="col-12 col-md-6 offset-md-1 col-lg-4 offset-lg-3 pr-4">
+                                <ul class="list-group" style="font-size:20px;">
+                                    <li class="list-group-item d-flex justify-content-between bg-light">
+                                        <span class="text-info"> Total (BDT)</span>
+                                        <strong class="text-info">৳ <span id="txtOrderTotal"></span>@Model.OrderDetailsCartVM.OrderHeader.OrderTotal.ToString("0.00")</strong>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+
+                        </div>
+                        <div class="card-footer">
+                            <div class="col-12 col-lg-4 offset-lg-8 col-md-6 offset-md-12">
+                                <a asp-page="Summary" class="btn btn-success form-control">Proceed to Checkout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        else
+        {
+            <div class="col-md-12 text-center" style="height: 500px;">
+                <label>We're sorry but your cart is empty.</label>
+                <label><a asp-page="/Customer/Product/Index">Click here</a> to start buying</label>
+            </div>
+
+
+        }
+    </form>
+
